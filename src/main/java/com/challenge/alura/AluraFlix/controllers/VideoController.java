@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -19,7 +20,7 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/videos")
-    public ResponseEntity<Video> videoResponseEntitySave(@RequestBody Video video, URI location){
+    public ResponseEntity<Video> videoResponseEntitySave(@Valid @RequestBody Video video, URI location){
         return ResponseEntity.created(location).body(videoService.saveVideo(video));
     }
 }
