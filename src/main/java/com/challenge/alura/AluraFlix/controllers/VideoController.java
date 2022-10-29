@@ -1,6 +1,8 @@
 package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Video;
+import com.challenge.alura.AluraFlix.entities.dto.Mapper;
+import com.challenge.alura.AluraFlix.entities.dto.VideoDto;
 import com.challenge.alura.AluraFlix.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping("/videos")
-    public ResponseEntity<Video> videoResponseEntitySave(@Valid @RequestBody Video video, URI location){
-        return ResponseEntity.created(location).body(videoService.saveVideo(video));
+    public ResponseEntity<VideoDto> videoResponseEntitySave(@Valid @RequestBody VideoDto videoDto, URI location){
+        return ResponseEntity.created(location).body(videoService.saveVideo(videoDto));
     }
 }
