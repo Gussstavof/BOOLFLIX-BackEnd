@@ -6,6 +6,8 @@ import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VideoService {
 
@@ -16,8 +18,12 @@ public class VideoService {
     private Mapper mapper;
 
     public VideoDto saveVideo(VideoDto videoDto){
-        repository.save(mapper.toVideo(videoDto));
-        return mapper.setStatus(videoDto);
+        var response = repository.save(mapper.toVideo(videoDto));
+        return mapper.toVideoDto(response);
+    }
+
+    public List<VideoDto> getAll(){
+        return  mapper.toListVideoDtos(repository.findAll());
     }
 
 

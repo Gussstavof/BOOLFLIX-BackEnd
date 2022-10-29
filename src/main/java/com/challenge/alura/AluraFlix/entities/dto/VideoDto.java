@@ -1,5 +1,6 @@
 package com.challenge.alura.AluraFlix.entities.dto;
 
+import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.enums.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +28,12 @@ public class VideoDto {
     @NotEmpty
     private String url;
     private StatusEnum status;
+
+    public VideoDto(Video video) {
+        this.title = video.getTitle();
+        this.description = video.getDescription();
+        this.url = video.getUrl();
+        this.status = video.getStatus();
+    }
 
 }

@@ -4,8 +4,8 @@ import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.entities.dto.VideoDto;
 import com.challenge.alura.AluraFlix.enums.StatusEnum;
 import com.challenge.alura.AluraFlix.services.VideoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -42,6 +42,7 @@ class VideoControllerTest {
 
     VideoDto videoDto;
     VideoDto videoDtoNull;
+    VideoDto videoDtoResponse;
 
     @BeforeEach
     void setUp(){
@@ -49,6 +50,13 @@ class VideoControllerTest {
                 .title("testando")
                 .description("testandoController")
                 .url("https://www.youtube.com/")
+                .build();
+
+        videoDtoResponse = VideoDto.builder()
+                .title("testando")
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .status(StatusEnum.CREATED)
                 .build();
 
         videoDtoNull =  VideoDto.builder()
@@ -73,6 +81,14 @@ class VideoControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(videoDtoNull)))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
+    @Test
+    void get_all_videos() throws Exception {
+        mockMvc.perform(get("/videos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(videoDtoResponse)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }

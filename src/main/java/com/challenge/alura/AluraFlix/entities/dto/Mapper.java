@@ -4,6 +4,9 @@ import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.enums.StatusEnum;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class Mapper {
 
@@ -12,14 +15,21 @@ public class Mapper {
                 .description(videoDto.getDescription())
                 .title(videoDto.getTitle())
                 .url(videoDto.getUrl())
+                .status(StatusEnum.CREATED)
                 .build();
     }
 
-    public VideoDto setStatus(VideoDto videoDto){
+    public List<VideoDto> toListVideoDtos(List<Video> video){
+        return video.stream().map(VideoDto::new).collect(Collectors.toList());
+
+    }
+
+
+    public VideoDto toVideoDto(Video videoResponse){
         return VideoDto.builder()
-                .title(videoDto.getTitle())
-                .url(videoDto.getUrl())
-                .status(StatusEnum.CREATED)
+                .title(videoResponse.getTitle())
+                .url(videoResponse.getUrl())
+                .status(videoResponse.getStatus())
                 .build();
     }
 
