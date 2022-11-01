@@ -52,13 +52,18 @@ class VideoServiceTest {
         when(videoRepository.findAll())
                 .thenReturn(videos);
 
-        var videoDtosResponse = videoService.getAll();
+        var videoResponse = videoService.getAll();
 
-        assertSame(videoDtosResponse.get(0), videoDtosResponse.get(0));
+        assertSame(videoResponse.get(0), videos.get(0));
     }
 
     @Test
     void  getById(){
-        
+       when(videoRepository.findById("1"))
+               .thenReturn(java.util.Optional.ofNullable(video));
+
+       var videoResponse = videoService.getById("1");
+
+       assertSame(videoResponse, video);
     }
 }
