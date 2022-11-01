@@ -1,94 +1,89 @@
 package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Video;
-import com.challenge.alura.AluraFlix.entities.dto.VideoDto;
-import com.challenge.alura.AluraFlix.enums.StatusEnum;
 import com.challenge.alura.AluraFlix.services.VideoService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import org.springframework.http.HttpStatus;
+
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+
+import java.net.URI;
+import java.util.Collections;
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = VideoController.class)
-@AutoConfigureMockMvc
 class VideoControllerTest {
 
-    @Autowired
+    @InjectMocks
     private VideoController videoController;
 
-    @MockBean
+    @Mock
     private VideoService videoService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    Video video;
+    URI location;
 
-    @Autowired
-    private MockMvc mockMvc;
 
-    VideoDto videoDto;
-    VideoDto videoDtoNull;
-    VideoDto videoDtoResponse;
 
     @BeforeEach
     void setUp(){
-        videoDto = VideoDto.builder()
+        video = Video.builder()
+                .id("1")
                 .title("testando")
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
 
-        videoDtoResponse = VideoDto.builder()
-                .title("testando")
-                .description("testandoController")
-                .url("https://www.youtube.com/")
-                .status(StatusEnum.CREATED)
-                .build();
-
-        videoDtoNull =  VideoDto.builder()
-                .title(null)
-                .description(null)
-                .url(null)
-                .build();
     }
 
     @Test
-    void save_video_created() throws Exception {
+    void save_video_created_test(){
+        Mockito.when(videoService.saveVideo(video))
+                .thenReturn(video);
 
-        mockMvc.perform(post("/videos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(videoDto)))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        var result = videoController.videoResponseEntitySave(video, location);
+
+        Assertions.assertSame(result.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
-    void attributes_null_and_return_400() throws Exception {
-        mockMvc.perform(post("/videos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(videoDtoNull)))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    void get_all_videos_test() {
+        var videos = Collections.singletonList(video);
+        Mockito.when(videoService.
+                getAll()).thenReturn(videos);
+
+        var result = videoController.videoDtoResponseEntityGetAll();
+
+        Assertions.assertSame(result.getStatusCode(), HttpStatus.OK);
+    }
+
+
+    @Test
+    void get_video_by_id_test_status_code() {
+        Mockito.when(videoService.getById("1")).thenReturn(video);
+
+        var result = videoController.videoDtoResponseEntityGetById("1");
+
+        Assertions.assertSame(result.getStatusCode(), HttpStatus.OK);
     }
 
     @Test
-    void get_all_videos() throws Exception {
-        mockMvc.perform(get("/videos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(videoDtoResponse)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+    void get_video_by_id_test_response_body() {
+        Mockito.when(videoService.getById("1")).thenReturn(video);
+
+        var result = videoController.videoDtoResponseEntityGetById("1");
+
+        Assertions.assertSame(result.getBody().getTitle(), "testando");
     }
 
 }
