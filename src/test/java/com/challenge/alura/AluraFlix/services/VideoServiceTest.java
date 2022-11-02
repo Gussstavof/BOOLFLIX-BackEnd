@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
@@ -48,7 +47,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void saveVideo() {
+    void save_video() {
         when(videoRepository.save(any())).thenReturn(video);
 
         Video videoResponse = videoService.saveVideo(video);
@@ -57,7 +56,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  getAll(){
+    void  get_all(){
         var videos = Collections.singletonList(video);
 
         when(videoRepository.findAll())
@@ -69,7 +68,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  getById(){
+    void  get_by_id(){
        when(videoRepository.findById("1"))
                .thenReturn(java.util.Optional.ofNullable(video));
 
@@ -79,7 +78,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  getByIdNotFound(){
+    void  get_by_id_NotFound(){
         when(videoRepository.findById("0"))
                 .thenThrow(new ExceptionNotFound("Id not found"));
 
