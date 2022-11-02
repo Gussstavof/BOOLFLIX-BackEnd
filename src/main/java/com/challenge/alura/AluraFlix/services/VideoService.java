@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VideoService {
@@ -24,7 +25,16 @@ public class VideoService {
 
     public Video getById(String id){
         return repository.findById(id)
-                        .orElseThrow(() -> new ExceptionNotFound("Id not found"));
+                .orElseThrow(() -> new ExceptionNotFound("Id not found"));
     }
 
+    public Video update(String id, Video video) {
+      return repository.findById(id).map((videoUpdate -> {
+          videoUpdate.setTitle(video.getTitle());
+          videoUpdate.setDescription(video.getDescription());
+          videoUpdate.setUrl(video.getUrl());
+          return repository.save(videoUpdate);
+      })).orElseThrow(() -> new ExceptionNotFound("Id not found"));
+
+    }
 }

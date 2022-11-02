@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.Objects;
 
 
 @ExtendWith(SpringExtension.class)
@@ -31,6 +32,7 @@ class VideoControllerTest {
     private VideoService videoService;
 
     Video video;
+    Video videoUpdate;
     URI location;
 
 
@@ -43,6 +45,14 @@ class VideoControllerTest {
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
+
+        videoUpdate = Video.builder()
+                .id("1")
+                .title("testando2")
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .build();
+
 
     }
 
@@ -83,7 +93,16 @@ class VideoControllerTest {
 
         var result = videoController.videoDtoResponseEntityGetById("1");
 
-        Assertions.assertSame(result.getBody().getTitle(), "testando");
+        Assertions.assertSame(Objects.requireNonNull(result.getBody()).getTitle(), "testando");
+    }
+
+    @Test
+    void update_video(){
+        Mockito.when(videoService.update("1", videoUpdate)).thenReturn(videoUpdate);
+
+       var result = videoController.videoResponseEntityUpdate("1", videoUpdate);
+
+       Assertions.assertSame(result.getBody().getTitle(), "testando2");
     }
 
 }

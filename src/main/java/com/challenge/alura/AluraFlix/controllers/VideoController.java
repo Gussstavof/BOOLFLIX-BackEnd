@@ -18,7 +18,8 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping
-    public ResponseEntity<Video> videoResponseEntitySave(@Valid @RequestBody Video video, URI location){
+    public ResponseEntity<Video> videoResponseEntitySave(@Valid @RequestBody Video video,
+                                                         URI location){
         return ResponseEntity.created(location).body(videoService.saveVideo(video));
     }
 
@@ -30,5 +31,11 @@ public class VideoController {
     @GetMapping("/{id}")
     public ResponseEntity<Video> videoDtoResponseEntityGetById(@PathVariable String id){
         return ResponseEntity.ok(videoService.getById(id));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Video> videoResponseEntityUpdate(@PathVariable String id,
+                                                           @Valid @RequestBody Video video){
+        return ResponseEntity.ok(videoService.update(id, video));
     }
 }

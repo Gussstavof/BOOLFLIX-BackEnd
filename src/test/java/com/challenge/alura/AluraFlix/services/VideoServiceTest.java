@@ -1,15 +1,18 @@
 package com.challenge.alura.AluraFlix.services;
 
 import com.challenge.alura.AluraFlix.entities.Video;
+import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,14 +26,22 @@ class VideoServiceTest {
     @Mock
     VideoRepository videoRepository;
 
-
     Video video;
+    Video videoUpdate;
 
     @BeforeEach
     void setUp() {
 
         video = Video.builder()
+                .id("1")
                 .title("testando")
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .build();
+
+        videoUpdate = Video.builder()
+                .id("1")
+                .title("testando2")
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
@@ -42,7 +53,7 @@ class VideoServiceTest {
 
         Video videoResponse = videoService.saveVideo(video);
 
-        assertSame(videoResponse.getTitle(),"testando" );
+        assertSame(videoResponse, video);
     }
 
     @Test
@@ -65,5 +76,24 @@ class VideoServiceTest {
        var videoResponse = videoService.getById("1");
 
        assertSame(videoResponse, video);
+    }
+
+    @Test
+    void  getByIdNotFound(){
+        when(videoRepository.findById("0"))
+                .thenThrow(new ExceptionNotFound("Id not found"));
+
+        assertThrows(ExceptionNotFound.class, () -> videoService.getById("0"));
+    }
+
+    @Test
+    void update_video(){
+        when(videoRepository.findById("1"))
+                .thenReturn(Optional.ofNullable(video));
+        when(videoRepository.save(videoUpdate))
+                .thenReturn(videoUpdate);
+
+        var result = videoService.update("1",videoUpdate);
+        assertSame(result, videoUpdate);
     }
 }
