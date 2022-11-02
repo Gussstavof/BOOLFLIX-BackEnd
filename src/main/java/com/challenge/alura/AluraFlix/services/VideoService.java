@@ -18,16 +18,16 @@ public class VideoService {
         return repository.save(video);
     }
 
-    public List<Video> getAll(){
+    public List<Video> getAllVideos(){
         return  repository.findAll();
     }
 
-    public Video getById(String id){
+    public Video getByIdVideo(String id){
         return repository.findById(id)
                 .orElseThrow(() -> new ExceptionNotFound("Id not found"));
     }
 
-    public Video update(String id, Video video) {
+    public Video updateVideo(String id, Video video) {
       return repository.findById(id).map((videoUpdate -> {
           videoUpdate.setTitle(video.getTitle());
           videoUpdate.setDescription(video.getDescription());
@@ -36,4 +36,5 @@ public class VideoService {
       })).orElseThrow(() -> new ExceptionNotFound("Id not found"));
 
     }
+
 }

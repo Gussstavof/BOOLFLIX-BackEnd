@@ -62,7 +62,7 @@ class VideoServiceTest {
         when(videoRepository.findAll())
                 .thenReturn(videos);
 
-        var videoResponse = videoService.getAll();
+        var videoResponse = videoService.getAllVideos();
 
         assertSame(videoResponse.get(0), videos.get(0));
     }
@@ -72,7 +72,7 @@ class VideoServiceTest {
        when(videoRepository.findById("1"))
                .thenReturn(java.util.Optional.ofNullable(video));
 
-       var videoResponse = videoService.getById("1");
+       var videoResponse = videoService.getByIdVideo("1");
 
        assertSame(videoResponse, video);
     }
@@ -82,7 +82,7 @@ class VideoServiceTest {
         when(videoRepository.findById("0"))
                 .thenThrow(new ExceptionNotFound("Id not found"));
 
-        assertThrows(ExceptionNotFound.class, () -> videoService.getById("0"));
+        assertThrows(ExceptionNotFound.class, () -> videoService.getByIdVideo("0"));
     }
 
     @Test
@@ -92,7 +92,7 @@ class VideoServiceTest {
         when(videoRepository.save(videoUpdate))
                 .thenReturn(videoUpdate);
 
-        var result = videoService.update("1",videoUpdate);
+        var result = videoService.updateVideo("1",videoUpdate);
         assertSame(result, videoUpdate);
     }
 }

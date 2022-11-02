@@ -74,7 +74,7 @@ class VideoControllerTest {
                 .singletonList(video);
 
         when(videoService.
-                getAll()).thenReturn(videos);
+                getAllVideos()).thenReturn(videos);
 
         var result = videoController
                 .videoDtoResponseEntityGetAll();
@@ -85,7 +85,7 @@ class VideoControllerTest {
 
     @Test
     void get_video_by_id_test_status_code() {
-        when(videoService.getById("1"))
+        when(videoService.getByIdVideo("1"))
                 .thenReturn(video);
 
         var result = videoController
@@ -96,7 +96,7 @@ class VideoControllerTest {
 
     @Test
     void get_video_by_id_test_response_body() {
-        when(videoService.getById("1")).thenReturn(video);
+        when(videoService.getByIdVideo("1")).thenReturn(video);
 
         var result = videoController
                 .videoDtoResponseEntityGetById("1");
@@ -107,7 +107,7 @@ class VideoControllerTest {
 
     @Test
     void update_video(){
-        when(videoService.update("1", videoUpdate))
+        when(videoService.updateVideo("1", videoUpdate))
                 .thenReturn(videoUpdate);
 
         var result = videoController

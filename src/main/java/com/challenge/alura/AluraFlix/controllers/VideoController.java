@@ -25,17 +25,17 @@ public class VideoController {
 
     @GetMapping
     public  ResponseEntity<List<Video>> videoDtoResponseEntityGetAll(){
-        return ResponseEntity.ok(videoService.getAll());
+        return ResponseEntity.ok(videoService.getAllVideos());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Video> videoDtoResponseEntityGetById(@PathVariable String id){
-        return ResponseEntity.ok(videoService.getById(id));
+        return ResponseEntity.ok(videoService.getByIdVideo(id));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<Video> videoResponseEntityUpdate(@PathVariable String id,
                                                            @Valid @RequestBody Video video){
-        return ResponseEntity.ok(videoService.update(id, video));
+        return ResponseEntity.ok(videoService.updateVideo(id, video));
     }
 }
