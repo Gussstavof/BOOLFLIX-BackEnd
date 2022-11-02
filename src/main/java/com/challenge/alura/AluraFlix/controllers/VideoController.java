@@ -2,6 +2,7 @@ package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.VideoService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,11 @@ public class VideoController {
     public ResponseEntity<Video> videoResponseEntityUpdate(@PathVariable String id,
                                                            @Valid @RequestBody Video video){
         return ResponseEntity.ok(videoService.updateVideo(id, video));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> videoResponseEntityDelete(@PathVariable String id){
+        videoService.deleteVideo(id);
+        return ResponseEntity.ok("deleted");
     }
 }

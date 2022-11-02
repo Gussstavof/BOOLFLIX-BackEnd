@@ -117,4 +117,14 @@ class VideoControllerTest {
                 (result.getBody()).getTitle(), "testando2");
     }
 
+    @Test
+    void delete_video(){
+        doNothing().when(videoService).deleteVideo("1");
+
+        var result = videoController
+                .videoResponseEntityDelete("1");
+
+        assertSame(result.getStatusCode(), HttpStatus.OK);
+    }
+
 }

@@ -23,8 +23,7 @@ public class VideoService {
     }
 
     public Video getByIdVideo(String id){
-        return repository.findById(id)
-                .orElseThrow(() -> new ExceptionNotFound("Id not found"));
+        return getIdOrThrow(id);
     }
 
     public Video updateVideo(String id, Video video) {
@@ -35,6 +34,15 @@ public class VideoService {
           return repository.save(videoUpdate);
       })).orElseThrow(() -> new ExceptionNotFound("Id not found"));
 
+    }
+
+    public void deleteVideo(String id){
+        repository.deleteById(getIdOrThrow(id).getId());
+    }
+
+    private Video getIdOrThrow(String id){
+        return repository.findById(id)
+                .orElseThrow(() -> new ExceptionNotFound("Id not found"));
     }
 
 }

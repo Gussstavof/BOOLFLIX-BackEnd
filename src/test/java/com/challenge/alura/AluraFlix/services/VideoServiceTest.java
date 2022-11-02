@@ -3,6 +3,7 @@ package com.challenge.alura.AluraFlix.services;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -94,5 +95,20 @@ class VideoServiceTest {
 
         var result = videoService.updateVideo("1",videoUpdate);
         assertSame(result, videoUpdate);
+    }
+
+    @Test
+    void delete_video(){
+
+        when(videoRepository.findById("1"))
+                .thenReturn(Optional.ofNullable(video));
+
+        doNothing()
+                .when(videoRepository)
+                .deleteById("1");
+
+        videoService.deleteVideo("1");
+        verify(videoRepository).deleteById(video.getId());
+
     }
 }
