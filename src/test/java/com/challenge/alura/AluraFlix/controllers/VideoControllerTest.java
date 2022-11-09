@@ -67,7 +67,7 @@ class VideoControllerTest {
         var result = videoController
                 .videoResponseEntitySave(video, location);
 
-        assertSame(result.getStatusCode(), HttpStatus.CREATED);
+        assertEquals(result, ResponseEntity.created(location).body(video));
     }
 
     @Test
@@ -80,30 +80,19 @@ class VideoControllerTest {
         ResponseEntity<List<Video>> result = videoController
                 .videoDtoResponseEntityGetAll();
 
-        assertSame(result.getStatusCode(), HttpStatus.OK);
+        assertEquals(result, ResponseEntity.ok(videos));
     }
 
 
     @Test
-    void get_video_by_id_test_status_code() {
+    void get_video_by_id_test() {
         when(videoService.getByIdVideo("1"))
                 .thenReturn(video);
 
         var result = videoController
                 .videoDtoResponseEntityGetById("1");
 
-        assertSame(result.getStatusCode(), HttpStatus.OK);
-    }
-
-    @Test
-    void get_video_by_id_test_response_body() {
-        when(videoService.getByIdVideo("1")).thenReturn(video);
-
-        var result = videoController
-                .videoDtoResponseEntityGetById("1");
-
-        assertSame(Objects.requireNonNull
-                (result.getBody()).getTitle(), "testando");
+        assertEquals(result, ResponseEntity.ok(video));
     }
 
     @Test
@@ -114,8 +103,7 @@ class VideoControllerTest {
         var result = videoController
                 .videoResponseEntityUpdate("1", videoUpdate);
 
-        assertSame(Objects.requireNonNull
-                (result.getBody()).getTitle(), "testando2");
+        assertEquals(result, ResponseEntity.ok(videoUpdate));
     }
 
     @Test
