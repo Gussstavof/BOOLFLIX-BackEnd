@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,6 +33,7 @@ class CategoryControllerTest {
         this.category = Category.builder()
                 .id("1")
                 .title("Back-End")
+                .color("#00008B")
                 .build();
     }
 
@@ -42,5 +44,15 @@ class CategoryControllerTest {
         var result = categoryController.saveCategoryResponseEntity(category, location);
 
         assertEquals(result, ResponseEntity.created(location).body(category));
+    }
+
+    @Test
+    void getAllCategoriesResponseEntity(){
+        var categories = Collections.singletonList(category);
+        when(categoryService.getAll()).thenReturn(categories);
+
+        var result = categoryController.getAllResponseEntity();
+
+        assertEquals(result, ResponseEntity.ok(categories));
     }
 }

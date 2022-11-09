@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
+
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +30,7 @@ class CategoryServiceTest {
         this.category = Category.builder()
                 .id("1")
                 .title("Back-End")
+                .color("#00008B")
                 .build();
     }
 
@@ -38,5 +41,15 @@ class CategoryServiceTest {
         var result = categoryService.save(category);
 
         assertSame(result, category);
+    }
+
+    @Test
+    void getAll(){
+        var categories = Collections.singletonList(category);
+        when(categoryRepository.findAll()).thenReturn(categories);
+
+        var result = categoryService.getAll();
+
+        assertSame(result, categories);
     }
 }
