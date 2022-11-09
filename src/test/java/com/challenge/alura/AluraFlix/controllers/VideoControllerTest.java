@@ -12,6 +12,7 @@ import org.mockito.Mock;
 
 import org.springframework.http.HttpStatus;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.*;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -70,13 +72,12 @@ class VideoControllerTest {
 
     @Test
     void get_all_videos_test() {
-        var videos = Collections
-                .singletonList(video);
+        var videos = Collections.singletonList(video);
 
         when(videoService.
                 getAllVideos()).thenReturn(videos);
 
-        var result = videoController
+        ResponseEntity<List<Video>> result = videoController
                 .videoDtoResponseEntityGetAll();
 
         assertSame(result.getStatusCode(), HttpStatus.OK);

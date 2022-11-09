@@ -2,7 +2,6 @@ package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.VideoService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class VideoController {
     }
 
     @GetMapping
-    public  ResponseEntity<List<Video>> videoDtoResponseEntityGetAll(){
+    public ResponseEntity<List<Video>> videoDtoResponseEntityGetAll(){
         return ResponseEntity.ok(videoService.getAllVideos());
     }
 
