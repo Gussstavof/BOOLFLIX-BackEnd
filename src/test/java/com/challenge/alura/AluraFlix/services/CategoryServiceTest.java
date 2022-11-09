@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.mockito.Mockito.*;
@@ -29,7 +27,7 @@ class CategoryServiceTest {
     void setUp() {
         this.category = Category.builder()
                 .id("1")
-                .name("Back-End")
+                .title("Back-End")
                 .build();
     }
 

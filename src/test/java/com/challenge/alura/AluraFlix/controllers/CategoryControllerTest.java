@@ -31,7 +31,7 @@ class CategoryControllerTest {
     void setUp() {
         this.category = Category.builder()
                 .id("1")
-                .name("Back-End")
+                .title("Back-End")
                 .build();
     }
 

@@ -17,6 +17,8 @@ public class Category {
     @Id
     private String id;
     @NotBlank
-    private String name;
+    private String title;
+    @NotBlank
+    private String color;
 
 }
