@@ -11,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
 
+import static java.util.Optional.ofNullable;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,5 +52,14 @@ class CategoryServiceTest {
         var result = categoryService.getAll();
 
         assertSame(result, categories);
+    }
+
+    @Test
+    void getById(){
+        when(categoryRepository.findById("1")).thenReturn(ofNullable(category));
+
+        var result = categoryService.getById("1");
+
+        assertSame(result, category);
     }
 }

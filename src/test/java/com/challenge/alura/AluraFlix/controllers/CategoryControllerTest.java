@@ -55,4 +55,13 @@ class CategoryControllerTest {
 
         assertEquals(result, ResponseEntity.ok(categories));
     }
+
+    @Test
+    void getByIdCategoryResponseEntity(){
+        when(categoryService.getById("1")).thenReturn(category);
+
+        var result = categoryController.getByIdResponseEntity("1");
+
+        assertEquals(result, ResponseEntity.ok(category));
+    }
 }

@@ -28,4 +28,9 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getAllResponseEntity(){
         return ResponseEntity.ok(categoryService.getAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getByIdResponseEntity(@PathVariable String id){
+        return ResponseEntity.ok(categoryService.getById(id));
+    }
 }
