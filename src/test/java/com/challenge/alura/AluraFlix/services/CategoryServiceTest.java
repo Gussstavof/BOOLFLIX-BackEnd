@@ -85,4 +85,14 @@ class CategoryServiceTest {
         assertEquals(result, categoryUpdate);
 
     }
+
+    @Test
+    void delete(){
+        doNothing()
+                .when(categoryRepository)
+                .deleteById("1");
+        categoryService.deleteCategory("1");
+        verify(categoryRepository).deleteById(category.getId());
+
+    }
 }

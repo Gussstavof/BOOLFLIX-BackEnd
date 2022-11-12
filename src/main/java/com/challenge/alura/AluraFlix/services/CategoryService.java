@@ -34,4 +34,8 @@ public class CategoryService {
            return categoryRepository.save(categoryUpdate);
         }).orElseThrow(() -> new ExceptionNotFound("id not found"));
     }
+
+    public void deleteCategory(String id) {
+        categoryRepository.deleteById(id);
+    }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.verification.VerificationOverTimeImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -26,6 +27,7 @@ class CategoryControllerTest {
     CategoryService categoryService;
 
     Category category;
+    Category categoryUpdate;
     URI location;
 
     @BeforeEach
@@ -64,4 +66,25 @@ class CategoryControllerTest {
 
         assertEquals(result, ResponseEntity.ok(category));
     }
+
+    @Test
+    void updateByIdCategoryResponseEntity(){
+        when(categoryService.update("1", categoryUpdate)).thenReturn(categoryUpdate);
+
+        var result = categoryController
+                .updateByIdCategoryResponseEntity(categoryUpdate,"1");
+
+        assertEquals(result, ResponseEntity.ok(categoryUpdate));
+    }
+
+    @Test
+    void deleteCategoryResponseEntity(){
+        doNothing().when(categoryService).deleteCategory("1");
+
+        var result = categoryController.deleteCategoryResponseEntity("1");
+
+        assertEquals(result, ResponseEntity.ok("deleted"));
+    }
+
+
 }
