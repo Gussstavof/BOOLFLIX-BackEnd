@@ -26,4 +26,12 @@ public class CategoryService {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ExceptionNotFound("id not found"));
     }
+
+    public Category update(String id, Category category) {
+        return categoryRepository.findById(id).map(categoryUpdate -> {
+           categoryUpdate.setTitle(category.getTitle());
+           categoryUpdate.setColor(category.getColor());
+           return categoryRepository.save(categoryUpdate);
+        }).orElseThrow(() -> new ExceptionNotFound("id not found"));
+    }
 }

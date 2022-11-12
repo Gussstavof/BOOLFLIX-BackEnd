@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -92,7 +93,7 @@ class VideoServiceTest {
         when(videoRepository.save(videoUpdate))
                 .thenReturn(videoUpdate);
 
-        var result = videoService.updateVideo("1",videoUpdate);
+        var result = videoService.updateVideo("1", videoUpdate);
         assertSame(result, videoUpdate);
     }
 

@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 import static org.mockito.Mockito.*;
@@ -22,22 +23,29 @@ class CategoryServiceTest {
     CategoryService categoryService;
 
     @Mock
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     Category category;
+    Category categoryUpdate;
 
     @BeforeEach
     void setUp() {
-        this.category = Category.builder()
+        category = Category.builder()
                 .id("1")
                 .title("Back-End")
                 .color("#00008B")
+                .build();
+        categoryUpdate = Category.builder()
+                .id("1")
+                .title("Front-End")
+                .color("#00000B")
                 .build();
     }
 
     @Test
     void save() {
-        when(categoryRepository.save(category)).thenReturn(category);
+        when(categoryRepository.save(category))
+                .thenReturn(category);
 
         var result = categoryService.save(category);
 
@@ -47,7 +55,8 @@ class CategoryServiceTest {
     @Test
     void getAll(){
         var categories = Collections.singletonList(category);
-        when(categoryRepository.findAll()).thenReturn(categories);
+        when(categoryRepository.findAll())
+                .thenReturn(categories);
 
         var result = categoryService.getAll();
 
@@ -56,10 +65,24 @@ class CategoryServiceTest {
 
     @Test
     void getById(){
-        when(categoryRepository.findById("1")).thenReturn(ofNullable(category));
+        when(categoryRepository.findById("1"))
+                .thenReturn(ofNullable(category));
 
         var result = categoryService.getById("1");
 
         assertSame(result, category);
+    }
+
+    @Test
+    void update(){
+        when(categoryRepository.findById("1"))
+                .thenReturn(Optional.ofNullable(category));
+        when(categoryRepository.save(categoryUpdate))
+                .thenReturn(categoryUpdate);
+
+        var result = categoryService.update("1", categoryUpdate);
+
+        assertEquals(result, categoryUpdate);
+
     }
 }

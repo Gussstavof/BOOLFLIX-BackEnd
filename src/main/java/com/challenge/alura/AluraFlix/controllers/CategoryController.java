@@ -33,4 +33,10 @@ public class CategoryController {
     public ResponseEntity<Category> getByIdResponseEntity(@PathVariable String id){
         return ResponseEntity.ok(categoryService.getById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> getByIdResponseEntity(@Valid @RequestBody Category category
+            ,@PathVariable String id){
+        return ResponseEntity.ok(categoryService.update(id, category));
+    }
 }
