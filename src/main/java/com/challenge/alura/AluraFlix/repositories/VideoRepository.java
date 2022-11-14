@@ -9,4 +9,6 @@ import java.util.Set;
 public interface VideoRepository extends MongoRepository<Video, String> {
 
     Set<Video> findByCategory(Category id);
+
+    Set<Video> findByTitleContains(String title);
 }

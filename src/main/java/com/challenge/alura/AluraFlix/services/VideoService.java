@@ -1,6 +1,5 @@
 package com.challenge.alura.AluraFlix.services;
 
-import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class VideoService {
@@ -53,5 +53,9 @@ public class VideoService {
         video.setCategory(
                 categoryRepository.findById(video.getCategory().getId())
                         .orElseThrow(() -> new ExceptionNotFound("Id not found")));
+    }
+
+    public Set<Video> getByTitleVideo(String title) {
+        return videoRepository.findByTitleContains(title);
     }
 }

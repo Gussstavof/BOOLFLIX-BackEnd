@@ -116,4 +116,14 @@ class VideoControllerTest {
         assertSame(result.getStatusCode(), HttpStatus.OK);
     }
 
+    @Test
+    void get_by_name(){
+        var videos = Collections.singleton(video);
+        when(videoService.getByTitleVideo("Java")).thenReturn(videos);
+
+        var result = videoController.videoResponseEntityGetByTitle("Java");
+
+        assertEquals(result, ResponseEntity.ok(videos));
+    }
+
 }

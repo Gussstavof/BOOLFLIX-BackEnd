@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/videos")
@@ -43,5 +44,10 @@ public class VideoController {
     public ResponseEntity<String> videoResponseEntityDelete(@PathVariable String id){
         videoService.deleteVideo(id);
         return ResponseEntity.ok("deleted");
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Set<Video>> videoResponseEntityGetByTitle(@RequestParam("title") String title){
+        return ResponseEntity.ok(videoService.getByTitleVideo(title));
     }
 }

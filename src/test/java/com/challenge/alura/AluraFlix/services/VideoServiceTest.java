@@ -131,4 +131,14 @@ class VideoServiceTest {
         verify(videoRepository).deleteById(video.getId());
 
     }
+
+    @Test
+    void get_by_title(){
+        var videos = Collections.singleton(video);
+        when(videoRepository.findByTitleContains("Java")).thenReturn(videos);
+
+        var result = videoService.getByTitleVideo("Java");
+
+        assertEquals(result, videos);
+    }
 }
