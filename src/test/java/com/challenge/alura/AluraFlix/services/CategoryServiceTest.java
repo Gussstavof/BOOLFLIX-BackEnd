@@ -57,7 +57,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void save() {
+    void saveCategoryTest() {
         when(categoryRepository.save(category))
                 .thenReturn(category);
 
@@ -67,7 +67,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void getAll(){
+    void getAllVideosTest(){
         var categories = Collections.singletonList(category);
         when(categoryRepository.findAll())
                 .thenReturn(categories);
@@ -78,7 +78,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void getById(){
+    void getByIdCategoryTest(){
         when(categoryRepository.findById("1"))
                 .thenReturn(ofNullable(category));
 
@@ -88,7 +88,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void update(){
+    void updateCategoryTest(){
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
         when(categoryRepository.save(categoryUpdate))
@@ -101,7 +101,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void delete(){
+    void deleteVideoTest(){
         doNothing()
                 .when(categoryRepository)
                 .deleteById("1");
@@ -111,7 +111,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void getVideosByCategory(){
+    void getVideosByCategoryTest(){
        Set<Video> videos = Collections.singleton(video);
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));

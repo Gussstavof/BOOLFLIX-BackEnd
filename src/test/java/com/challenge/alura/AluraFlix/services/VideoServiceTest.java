@@ -66,7 +66,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void save_video() {
+    void saveVideoTest() {
         when(videoRepository.save(any())).thenReturn(video);
         when(categoryRepository.findById("1")).thenReturn(Optional.of(category));
 
@@ -76,7 +76,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  get_all(){
+    void  getAllTest(){
         var videos = Collections.singletonList(video);
 
         when(videoRepository.findAll())
@@ -88,7 +88,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  get_by_id(){
+    void  getVideoByIdTest(){
        when(videoRepository.findById("1"))
                .thenReturn(java.util.Optional.ofNullable(video));
 
@@ -98,7 +98,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void  get_by_id_NotFound(){
+    void  getVideoByIdNotFoundTest(){
         when(videoRepository.findById("0"))
                 .thenThrow(new ExceptionNotFound("Id not found"));
 
@@ -106,7 +106,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void update_video(){
+    void updateVideoTest(){
         when(videoRepository.findById("1"))
                 .thenReturn(Optional.of(video));
         when(videoRepository.save(videoUpdate))
@@ -118,7 +118,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void delete_video(){
+    void deleteVideoTest(){
 
         when(videoRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(video));
@@ -133,7 +133,7 @@ class VideoServiceTest {
     }
 
     @Test
-    void get_by_title(){
+    void getVideoByTitleTest(){
         var videos = Collections.singleton(video);
         when(videoRepository.findByTitleContains("Java")).thenReturn(videos);
 

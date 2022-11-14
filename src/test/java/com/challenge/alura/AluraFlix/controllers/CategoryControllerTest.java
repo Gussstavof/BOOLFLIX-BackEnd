@@ -50,7 +50,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void saveCategoryResponseEntity() {
+    void saveCategoryResponseEntityTest() {
         when(categoryService.save(category)).thenReturn(category);
 
         var result = categoryController.saveCategoryResponseEntity(category, location);
@@ -59,7 +59,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getAllCategoriesResponseEntity(){
+    void getAllCategoriesResponseEntityTest(){
         var categories = Collections.singletonList(category);
         when(categoryService.getAll()).thenReturn(categories);
 
@@ -69,7 +69,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getByIdCategoryResponseEntity(){
+    void getByIdCategoryResponseEntityTest(){
         when(categoryService.getById("1")).thenReturn(category);
 
         var result = categoryController.getByIdResponseEntity("1");
@@ -78,7 +78,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void updateByIdCategoryResponseEntity(){
+    void updateByIdCategoryResponseEntityTest(){
         when(categoryService.update("1", categoryUpdate)).thenReturn(categoryUpdate);
 
         var result = categoryController
@@ -88,7 +88,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void deleteCategoryResponseEntity(){
+    void deleteCategoryResponseEntityTest(){
         doNothing().when(categoryService).deleteCategory("1");
 
         var result = categoryController.deleteCategoryResponseEntity("1");
@@ -97,7 +97,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void getVideosByCategoryResponseEntity(){
+    void getVideosByCategoryResponseEntityTest(){
         Set<Video> videos = Collections.singleton(video);
         when(categoryService.getVideosByCategory("1")).thenReturn(videos);
         var result = categoryController.getVideosByCategoryResponseEntity("1");

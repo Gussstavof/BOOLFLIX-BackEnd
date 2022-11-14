@@ -5,7 +5,6 @@ import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

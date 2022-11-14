@@ -7,7 +7,6 @@ import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.pattern.PathPattern;
 
 import java.util.List;
 import java.util.Set;

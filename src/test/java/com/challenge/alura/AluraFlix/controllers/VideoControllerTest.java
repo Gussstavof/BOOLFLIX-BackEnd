@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 
 @ExtendWith(SpringExtension.class)
@@ -60,7 +59,7 @@ class VideoControllerTest {
     }
 
     @Test
-    void save_video_created_test(){
+    void videoResponseEntitySaveTest(){
         when(videoService.saveVideo(video))
                 .thenReturn(video);
 
@@ -71,7 +70,7 @@ class VideoControllerTest {
     }
 
     @Test
-    void get_all_videos_test() {
+    void videoDtoResponseEntityGetAllTest() {
         var videos = Collections.singletonList(video);
 
         when(videoService.
@@ -85,7 +84,7 @@ class VideoControllerTest {
 
 
     @Test
-    void get_video_by_id_test() {
+    void videoDtoResponseEntityGetByIdTest() {
         when(videoService.getByIdVideo("1"))
                 .thenReturn(video);
 
@@ -96,7 +95,7 @@ class VideoControllerTest {
     }
 
     @Test
-    void update_video(){
+    void videoResponseEntityUpdateTest(){
         when(videoService.updateVideo("1", videoUpdate))
                 .thenReturn(videoUpdate);
 
@@ -107,7 +106,7 @@ class VideoControllerTest {
     }
 
     @Test
-    void delete_video(){
+    void videoResponseEntityDeleteTest(){
         doNothing().when(videoService).deleteVideo("1");
 
         var result = videoController
@@ -117,7 +116,7 @@ class VideoControllerTest {
     }
 
     @Test
-    void get_by_name(){
+    void videoResponseEntityGetByTitleTest(){
         var videos = Collections.singleton(video);
         when(videoService.getByTitleVideo("Java")).thenReturn(videos);
 
