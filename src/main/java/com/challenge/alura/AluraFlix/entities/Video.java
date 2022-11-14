@@ -21,6 +21,7 @@ public class Video {
     private String title;
     @NotBlank
     private String description;
+    private Category category;
     @NotBlank
     @URL
     private String url;

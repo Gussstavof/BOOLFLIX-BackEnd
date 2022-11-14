@@ -1,6 +1,7 @@
 package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Category;
+import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -33,6 +35,12 @@ public class CategoryController {
     public ResponseEntity<Category> getByIdResponseEntity(@PathVariable String id){
         return ResponseEntity.ok(categoryService.getById(id));
     }
+
+    @GetMapping("/{id}/videos")
+    public ResponseEntity<Set<Video>> getVideosByCategoryResponseEntity(@PathVariable String id){
+        return ResponseEntity.ok(categoryService.getVideosByCategory(id));
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateByIdCategoryResponseEntity(@Valid @RequestBody Category category

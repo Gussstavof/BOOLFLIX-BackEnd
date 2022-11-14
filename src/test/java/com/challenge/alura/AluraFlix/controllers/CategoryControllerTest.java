@@ -1,6 +1,7 @@
 package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.entities.Category;
+import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -28,6 +30,7 @@ class CategoryControllerTest {
 
     Category category;
     Category categoryUpdate;
+    Video video;
     URI location;
 
     @BeforeEach
@@ -36,6 +39,13 @@ class CategoryControllerTest {
                 .id("1")
                 .title("Back-End")
                 .color("#00008B")
+                .build();
+        video = Video.builder()
+                .id("1")
+                .title("testando")
+                .description("testandoController")
+                .category(category)
+                .url("https://www.youtube.com/")
                 .build();
     }
 
@@ -84,6 +94,15 @@ class CategoryControllerTest {
         var result = categoryController.deleteCategoryResponseEntity("1");
 
         assertEquals(result, ResponseEntity.ok("deleted"));
+    }
+
+    @Test
+    void getVideosByCategoryResponseEntity(){
+        Set<Video> videos = Collections.singleton(video);
+        when(categoryService.getVideosByCategory("1")).thenReturn(videos);
+        var result = categoryController.getVideosByCategoryResponseEntity("1");
+
+        assertEquals(result, ResponseEntity.ok(videos));
     }
 
 

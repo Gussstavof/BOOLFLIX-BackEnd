@@ -1,7 +1,9 @@
 package com.challenge.alura.AluraFlix.services;
 
 import com.challenge.alura.AluraFlix.entities.Category;
+import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
+import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 import static java.util.Optional.ofNullable;
 import static org.mockito.Mockito.*;
@@ -23,10 +26,14 @@ class CategoryServiceTest {
     CategoryService categoryService;
 
     @Mock
-    private CategoryRepository categoryRepository;
+    CategoryRepository categoryRepository;
+
+    @Mock
+    VideoRepository videoRepository;
 
     Category category;
     Category categoryUpdate;
+    Video video;
 
     @BeforeEach
     void setUp() {
@@ -39,6 +46,13 @@ class CategoryServiceTest {
                 .id("1")
                 .title("Front-End")
                 .color("#00000B")
+                .build();
+        video = Video.builder()
+                .id("1")
+                .title("testando")
+                .description("testandoController")
+                .category(category)
+                .url("https://www.youtube.com/")
                 .build();
     }
 
@@ -94,5 +108,17 @@ class CategoryServiceTest {
         categoryService.deleteCategory("1");
         verify(categoryRepository).deleteById(category.getId());
 
+    }
+
+    @Test
+    void getVideosByCategory(){
+       Set<Video> videos = Collections.singleton(video);
+        when(categoryRepository.findById("1"))
+                .thenReturn(Optional.ofNullable(category));
+        when(videoRepository.findByCategory(category)).thenReturn(videos);
+
+        var result = categoryService.getVideosByCategory("1");
+
+        assertEquals(result, videos);
     }
 }

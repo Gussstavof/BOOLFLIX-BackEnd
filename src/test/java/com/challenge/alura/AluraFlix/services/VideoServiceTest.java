@@ -1,7 +1,9 @@
 package com.challenge.alura.AluraFlix.services;
 
+import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
+import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -26,22 +27,39 @@ class VideoServiceTest {
     @Mock
     VideoRepository videoRepository;
 
+    @Mock
+    CategoryRepository categoryRepository;
+
     Video video;
     Video videoUpdate;
+    Category category;
+    Category categoryId;
 
     @BeforeEach
     void setUp() {
+        categoryId = Category.builder()
+                .id("1")
+                .build();
+
+
+        category = Category.builder()
+                .id("1")
+                .title("Back-end")
+                .color("#00000")
+                .build();
 
         video = Video.builder()
                 .id("1")
                 .title("testando")
                 .description("testandoController")
+                .category(categoryId)
                 .url("https://www.youtube.com/")
                 .build();
 
         videoUpdate = Video.builder()
                 .id("1")
                 .title("testando2")
+                .category(categoryId)
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
@@ -50,6 +68,7 @@ class VideoServiceTest {
     @Test
     void save_video() {
         when(videoRepository.save(any())).thenReturn(video);
+        when(categoryRepository.findById("1")).thenReturn(Optional.of(category));
 
         Video videoResponse = videoService.saveVideo(video);
 
@@ -89,11 +108,12 @@ class VideoServiceTest {
     @Test
     void update_video(){
         when(videoRepository.findById("1"))
-                .thenReturn(Optional.ofNullable(video));
+                .thenReturn(Optional.of(video));
         when(videoRepository.save(videoUpdate))
                 .thenReturn(videoUpdate);
 
         var result = videoService.updateVideo("1", videoUpdate);
+
         assertSame(result, videoUpdate);
     }
 
