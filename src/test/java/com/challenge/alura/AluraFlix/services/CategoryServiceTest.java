@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
@@ -34,6 +36,7 @@ class CategoryServiceTest {
     Category category;
     Category categoryUpdate;
     Video video;
+    Pageable pageable;
 
     @BeforeEach
     void setUp() {
@@ -68,11 +71,11 @@ class CategoryServiceTest {
 
     @Test
     void getAllVideosTest(){
-        var categories = Collections.singletonList(category);
-        when(categoryRepository.findAll())
+        var categories = new PageImpl<>(Collections.singletonList(category));
+        when(categoryRepository.findAll(pageable))
                 .thenReturn(categories);
 
-        var result = categoryService.getAll();
+        var result = categoryService.getAll(pageable);
 
         assertSame(result, categories);
     }

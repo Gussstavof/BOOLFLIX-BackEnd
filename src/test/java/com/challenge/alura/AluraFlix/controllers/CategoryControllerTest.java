@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -31,6 +33,7 @@ class CategoryControllerTest {
     Category categoryUpdate;
     Video video;
     URI location;
+    Pageable pageable;
 
     @BeforeEach
     void setUp() {
@@ -59,10 +62,11 @@ class CategoryControllerTest {
 
     @Test
     void getAllCategoriesResponseEntityTest(){
-        var categories = Collections.singletonList(category);
-        when(categoryService.getAll()).thenReturn(categories);
+        var categories = new PageImpl<>(Collections.singletonList(category));
 
-        var result = categoryController.getAllResponseEntity();
+        when(categoryService.getAll(pageable)).thenReturn(categories);
+
+        var result = categoryController.getAllResponseEntity(pageable);
 
         assertEquals(result, ResponseEntity.ok(categories));
     }

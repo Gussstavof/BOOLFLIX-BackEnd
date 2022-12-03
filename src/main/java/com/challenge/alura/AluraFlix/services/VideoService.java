@@ -5,6 +5,8 @@ import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class VideoService {
         return videoRepository.save(video);
     }
 
-    public List<Video> getAllVideos(){
-        return  videoRepository.findAll();
+    public Page<Video> getAllVideos(Pageable pageable){
+        return  videoRepository.findAll(pageable);
     }
 
     public Video getByIdVideo(String id){

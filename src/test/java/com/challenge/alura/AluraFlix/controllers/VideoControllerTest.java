@@ -10,6 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -33,9 +36,12 @@ class VideoControllerTest {
     @Mock
     private VideoService videoService;
 
+
+
     Video video;
     Video videoUpdate;
     URI location;
+    Pageable pageable;
 
 
 
@@ -71,13 +77,13 @@ class VideoControllerTest {
 
     @Test
     void videoDtoResponseEntityGetAllTest() {
-        var videos = Collections.singletonList(video);
+        Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
 
         when(videoService.
-                getAllVideos()).thenReturn(videos);
+                getAllVideos(pageable)).thenReturn(videos);
 
-        ResponseEntity<List<Video>> result = videoController
-                .videoDtoResponseEntityGetAll();
+       var result = videoController
+                .videoDtoResponseEntityGetAll(pageable);
 
         assertEquals(result, ResponseEntity.ok(videos));
     }
