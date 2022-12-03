@@ -4,6 +4,8 @@ import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ public class CategoryController {
 
 
     @PostMapping
+    @CacheEvict(value = "get_by_category", allEntries = true)
     public ResponseEntity<Category> saveCategoryResponseEntity(@Valid @RequestBody Category category, URI uri){
         return ResponseEntity.created(uri).body(categoryService.save(category));
     }
@@ -36,18 +39,21 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/videos")
+    @Cacheable(value = "get_by_category")
     public ResponseEntity<Set<Video>> getVideosByCategoryResponseEntity(@PathVariable String id){
         return ResponseEntity.ok(categoryService.getVideosByCategory(id));
     }
 
 
     @PutMapping("/{id}")
+    @CacheEvict(value = "get_by_category", allEntries = true)
     public ResponseEntity<Category> updateByIdCategoryResponseEntity(@Valid @RequestBody Category category
             ,@PathVariable String id){
         return ResponseEntity.ok(categoryService.update(id, category));
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "get_by_category", allEntries = true)
     public ResponseEntity<String> deleteCategoryResponseEntity(String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok("deleted");

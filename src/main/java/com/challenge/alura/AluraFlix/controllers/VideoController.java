@@ -3,6 +3,8 @@ package com.challenge.alura.AluraFlix.controllers;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +21,14 @@ public class VideoController {
     private VideoService videoService;
 
     @PostMapping
+    @CacheEvict(value = "get_all_videos", allEntries = true)
     public ResponseEntity<Video> videoResponseEntitySave(@Valid @RequestBody Video video,
                                                          URI location){
         return ResponseEntity.created(location).body(videoService.saveVideo(video));
     }
 
     @GetMapping
+    @Cacheable(value = "get_all_videos")
     public ResponseEntity<List<Video>> videoDtoResponseEntityGetAll(){
         return ResponseEntity.ok(videoService.getAllVideos());
     }
@@ -34,13 +38,15 @@ public class VideoController {
         return ResponseEntity.ok(videoService.getByIdVideo(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
+    @CacheEvict(value = "get_all_videos", allEntries = true)
     public ResponseEntity<Video> videoResponseEntityUpdate(@PathVariable String id,
                                                            @Valid @RequestBody Video video){
         return ResponseEntity.ok(videoService.updateVideo(id, video));
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "get_all_videos", allEntries = true)
     public ResponseEntity<String> videoResponseEntityDelete(@PathVariable String id){
         videoService.deleteVideo(id);
         return ResponseEntity.ok("deleted");
