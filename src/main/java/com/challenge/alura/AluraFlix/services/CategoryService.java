@@ -1,5 +1,7 @@
 package com.challenge.alura.AluraFlix.services;
 
+import com.challenge.alura.AluraFlix.dto.CategoryDto;
+import com.challenge.alura.AluraFlix.dto.Mapper;
 import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
@@ -7,10 +9,10 @@ import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -22,24 +24,28 @@ public class CategoryService {
     @Autowired
     private VideoRepository videoRepository;
 
-    public Category save(Category category){
-        return categoryRepository.save(category);
+    @Autowired
+    private Mapper mapper;
+
+    public CategoryDto save(CategoryDto categoryDto){
+        var category = categoryRepository.save(mapper.toCategory(categoryDto));
+        return mapper.toCategorySaveDto(category);
     }
 
-    public Page<Category> getAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable);
+    public Page<CategoryDto> getAll(Pageable pageable) {
+        var page =  categoryRepository.findAll(pageable);
+        return mapper.toCategorySaveDto(page.getContent());
     }
 
-    public Category getById(String id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new ExceptionNotFound("id not found"));
+    public CategoryDto getById(String id) {
+        return mapper.toCategorySaveDto(getIdOrThrow(id));
     }
 
-    public Category update(String id, Category category) {
+    public CategoryDto update(String id, CategoryDto categoryDto) {
         return categoryRepository.findById(id).map(categoryUpdate -> {
-           categoryUpdate.setTitle(category.getTitle());
-           categoryUpdate.setColor(category.getColor());
-           return categoryRepository.save(categoryUpdate);
+           categoryUpdate.setTitle(categoryDto.getTitle());
+           categoryUpdate.setColor(categoryDto.getColor());
+           return mapper.toCategorySaveDto(categoryRepository.save(categoryUpdate));
         }).orElseThrow(() -> new ExceptionNotFound("id not found"));
     }
 
@@ -47,8 +53,8 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public Set<Video> getVideosByCategory(String id){
-        return videoRepository.findByCategory(getIdOrThrow(id));
+    public Page<Video> getVideosByCategory(String id, Pageable pageable){
+        return videoRepository.findByCategory(getIdOrThrow(id), pageable);
     }
 
 

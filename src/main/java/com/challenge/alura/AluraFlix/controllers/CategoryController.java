@@ -1,5 +1,6 @@
 package com.challenge.alura.AluraFlix.controllers;
 
+import com.challenge.alura.AluraFlix.dto.CategoryDto;
 import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.services.CategoryService;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -27,32 +27,34 @@ public class CategoryController {
 
     @PostMapping
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<Category> saveCategoryResponseEntity(@Valid @RequestBody Category category, URI uri){
+    public ResponseEntity<CategoryDto> saveCategoryResponseEntity(@Valid @RequestBody CategoryDto category,
+                                                                  URI uri){
         return ResponseEntity.created(uri).body(categoryService.save(category));
     }
 
     @GetMapping
-    public ResponseEntity<Page<Category>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity<Page<CategoryDto>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable){
         return ResponseEntity.ok(categoryService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getByIdResponseEntity(@PathVariable String id){
+    public ResponseEntity<CategoryDto> getByIdResponseEntity(@PathVariable String id){
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
     @GetMapping("/{id}/videos")
     @Cacheable(value = "get_by_category")
-    public ResponseEntity<Set<Video>> getVideosByCategoryResponseEntity(@PathVariable String id){
-        return ResponseEntity.ok(categoryService.getVideosByCategory(id));
+    public ResponseEntity<Page<Video>> getVideosByCategoryResponseEntity(@PathVariable String id,
+                                                                         @PageableDefault Pageable pageable){
+        return ResponseEntity.ok(categoryService.getVideosByCategory(id, pageable));
     }
 
 
     @PutMapping("/{id}")
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<Category> updateByIdCategoryResponseEntity(@Valid @RequestBody Category category
-            ,@PathVariable String id){
-        return ResponseEntity.ok(categoryService.update(id, category));
+    public ResponseEntity<CategoryDto> updateByIdCategoryResponseEntity(@Valid @RequestBody CategoryDto categoryDto,
+                                                                        @PathVariable String id){
+        return ResponseEntity.ok(categoryService.update(id, categoryDto));
     }
 
     @DeleteMapping("/{id}")
