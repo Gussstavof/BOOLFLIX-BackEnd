@@ -18,7 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 import static org.mockito.Mockito.*;
@@ -35,17 +34,29 @@ class CategoryServiceTest {
     @Mock
     Mapper mapper;
 
-    Category category;
     Category categoryUpdate;
+    Category category;
+    CategoryDto categoryUpdateDto;
+    CategoryDto categoryDto;
     Video video;
     Pageable pageable;
 
     @BeforeEach
     void setUp() {
+        categoryDto = CategoryDto.builder()
+                .id("1")
+                .title("Back-End")
+                .color("#00008B")
+                .build();
         category = Category.builder()
                 .id("1")
                 .title("Back-End")
                 .color("#00008B")
+                .build();
+        categoryUpdateDto = CategoryDto.builder()
+                .id("1")
+                .title("Front-End")
+                .color("#00000B")
                 .build();
         categoryUpdate = Category.builder()
                 .id("1")
@@ -65,7 +76,10 @@ class CategoryServiceTest {
     void saveCategoryTest() {
         when(categoryRepository.save(category))
                 .thenReturn(category);
-        var categoryDto = mapper.toCategorySaveDto(category);
+        when(mapper.toCategorySaveDto(category))
+                .thenReturn(categoryDto);
+        when(mapper.toCategory(categoryDto))
+                .thenReturn(category);
         var result = categoryService.save(categoryDto);
 
         assertSame(result, categoryDto);
@@ -74,10 +88,13 @@ class CategoryServiceTest {
     @Test
     void getAllVideosTest(){
         var categories = new PageImpl<>(Collections.singletonList(category));
-        var categoriesDto = new PageImpl<>(categories.stream().map(CategoryDto::new).collect(Collectors.toList()));
+        var categoriesDto = new PageImpl<>(Collections.singletonList(categoryDto));
+
         when(categoryRepository.findAll(pageable))
                 .thenReturn(categories);
-        when(mapper.toCategorySaveDto(categories.getContent())).thenReturn(categoriesDto);
+        when(mapper.toCategorySaveDto(categories.getContent()))
+                .thenReturn(categoriesDto);
+
         var result = categoryService.getAll(pageable);
 
         assertEquals(result, categoriesDto);
@@ -85,7 +102,6 @@ class CategoryServiceTest {
 
     @Test
     void getByIdCategoryTest(){
-        var categoryDto = mapper.toCategorySaveDto(category);
         when(categoryRepository.findById("1"))
                 .thenReturn(ofNullable(category));
         when(mapper.toCategorySaveDto(category))
@@ -98,17 +114,17 @@ class CategoryServiceTest {
 
     @Test
     void updateCategoryTest(){
-        var categoryDto = new Mapper().toCategorySaveDto(categoryUpdate);
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
+        when(mapper.toCategorySaveDto(categoryUpdate))
+                .thenReturn(categoryUpdateDto);
         when(categoryRepository.save(categoryUpdate))
                 .thenReturn(categoryUpdate);
-        when(mapper.toCategorySaveDto(categoryUpdate)).thenReturn(categoryDto);
 
-        var result = categoryService.update("1", categoryDto);
+        var result = categoryService.update("1", categoryUpdateDto);
 
         assertInstanceOf(CategoryDto.class, result);
-        assertEquals(categoryDto.getTitle(), result.getTitle());
+        assertEquals(categoryUpdate.getTitle(), result.getTitle());
 
     }
 
