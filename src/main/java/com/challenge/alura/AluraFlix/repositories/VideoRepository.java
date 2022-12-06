@@ -12,5 +12,5 @@ public interface VideoRepository extends MongoRepository<Video, String> {
 
     Page<Video> findByCategory(Category id, Pageable pageable);
 
-    Set<Video> findByTitleContains(String title);
+    Page<Video> findByTitleContains(String title, Pageable pageable);
 }

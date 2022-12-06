@@ -1,5 +1,7 @@
 package com.challenge.alura.AluraFlix.services;
 
+import com.challenge.alura.AluraFlix.dto.Mapper;
+import com.challenge.alura.AluraFlix.dto.VideoDto;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
@@ -9,9 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
-
 @Service
 public class VideoService {
     @Autowired
@@ -20,25 +19,30 @@ public class VideoService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Video saveVideo(Video video){
-        searchCategory(video);
-        return videoRepository.save(video);
+    @Autowired
+    private Mapper mapper;
+
+    public VideoDto saveVideo(VideoDto videoDto){
+        searchCategory(videoDto);
+        videoRepository.save(mapper.toVideo(videoDto));
+        return videoDto;
     }
 
-    public Page<Video> getAllVideos(Pageable pageable){
-        return  videoRepository.findAll(pageable);
+    public Page<VideoDto> getAllVideos(Pageable pageable){
+        var page = videoRepository.findAll(pageable);
+        return mapper.toVideoDto(page.getContent());
     }
 
-    public Video getByIdVideo(String id){
-        return getIdOrThrow(id);
+    public VideoDto getByIdVideo(String id){
+        return mapper.toVideoDto(getIdOrThrow(id));
     }
 
-    public Video updateVideo(String id, Video video) {
+    public VideoDto updateVideo(String id, VideoDto videoDto) {
       return videoRepository.findById(id).map(videoUpdate -> {
-          videoUpdate.setTitle(video.getTitle());
-          videoUpdate.setDescription(video.getDescription());
-          videoUpdate.setUrl(video.getUrl());
-          return videoRepository.save(videoUpdate);
+          videoUpdate.setTitle(videoDto.getTitle());
+          videoUpdate.setDescription(videoDto.getDescription());
+          videoUpdate.setUrl(videoDto.getUrl());
+          return mapper.toVideoDto(videoRepository.save(videoUpdate));
       }).orElseThrow(() -> new ExceptionNotFound("Id not found"));
     }
 
@@ -51,13 +55,14 @@ public class VideoService {
                 .orElseThrow(() -> new ExceptionNotFound("Id not found"));
     }
 
-    private void searchCategory(Video video){
-        video.setCategory(
-                categoryRepository.findById(video.getCategory().getId())
+    private void searchCategory(VideoDto videoDto){
+        videoDto.setCategory(
+                categoryRepository.findById(videoDto.getCategory().getId())
                         .orElseThrow(() -> new ExceptionNotFound("Id not found")));
     }
 
-    public Set<Video> getByTitleVideo(String title) {
-        return videoRepository.findByTitleContains(title);
+    public Page<VideoDto> getByTitleVideo(String title, Pageable pageable) {
+        var page = videoRepository.findByTitleContains(title, pageable);
+        return mapper.toVideoDto(page.getContent());
     }
 }

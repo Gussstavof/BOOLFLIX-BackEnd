@@ -9,11 +9,8 @@ import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class CategoryService {
@@ -29,23 +26,23 @@ public class CategoryService {
 
     public CategoryDto save(CategoryDto categoryDto){
         var category = categoryRepository.save(mapper.toCategory(categoryDto));
-        return mapper.toCategorySaveDto(category);
+        return mapper.toCategoryDto(category);
     }
 
     public Page<CategoryDto> getAll(Pageable pageable) {
         var page =  categoryRepository.findAll(pageable);
-        return mapper.toCategorySaveDto(page.getContent());
+        return mapper.toCategoryDto(page.getContent());
     }
 
     public CategoryDto getById(String id) {
-        return mapper.toCategorySaveDto(getIdOrThrow(id));
+        return mapper.toCategoryDto(getIdOrThrow(id));
     }
 
     public CategoryDto update(String id, CategoryDto categoryDto) {
         return categoryRepository.findById(id).map(categoryUpdate -> {
            categoryUpdate.setTitle(categoryDto.getTitle());
            categoryUpdate.setColor(categoryDto.getColor());
-           return mapper.toCategorySaveDto(categoryRepository.save(categoryUpdate));
+           return mapper.toCategoryDto(categoryRepository.save(categoryUpdate));
         }).orElseThrow(() -> new ExceptionNotFound("id not found"));
     }
 

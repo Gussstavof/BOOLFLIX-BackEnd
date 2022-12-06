@@ -76,7 +76,7 @@ class CategoryServiceTest {
     void saveCategoryTest() {
         when(categoryRepository.save(category))
                 .thenReturn(category);
-        when(mapper.toCategorySaveDto(category))
+        when(mapper.toCategoryDto(category))
                 .thenReturn(categoryDto);
         when(mapper.toCategory(categoryDto))
                 .thenReturn(category);
@@ -92,7 +92,7 @@ class CategoryServiceTest {
 
         when(categoryRepository.findAll(pageable))
                 .thenReturn(categories);
-        when(mapper.toCategorySaveDto(categories.getContent()))
+        when(mapper.toCategoryDto(categories.getContent()))
                 .thenReturn(categoriesDto);
 
         var result = categoryService.getAll(pageable);
@@ -104,7 +104,7 @@ class CategoryServiceTest {
     void getByIdCategoryTest(){
         when(categoryRepository.findById("1"))
                 .thenReturn(ofNullable(category));
-        when(mapper.toCategorySaveDto(category))
+        when(mapper.toCategoryDto(category))
                 .thenReturn(categoryDto);
 
         var result = categoryService.getById("1");
@@ -116,7 +116,7 @@ class CategoryServiceTest {
     void updateCategoryTest(){
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
-        when(mapper.toCategorySaveDto(categoryUpdate))
+        when(mapper.toCategoryDto(categoryUpdate))
                 .thenReturn(categoryUpdateDto);
         when(categoryRepository.save(categoryUpdate))
                 .thenReturn(categoryUpdate);
@@ -127,7 +127,6 @@ class CategoryServiceTest {
         assertEquals(categoryUpdate.getTitle(), result.getTitle());
 
     }
-
 
     @Test
     void deleteVideoTest(){
