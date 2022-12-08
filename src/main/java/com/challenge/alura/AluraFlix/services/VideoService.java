@@ -50,6 +50,12 @@ public class VideoService {
         videoRepository.deleteById(getIdOrThrow(id).getId());
     }
 
+
+    public Page<VideoDto> getByTitleVideo(String title, Pageable pageable) {
+        var page = videoRepository.findByTitleContains(title, pageable);
+        return mapper.toVideoDto(page.getContent());
+    }
+
     private Video getIdOrThrow(String id){
         return videoRepository.findById(id)
                 .orElseThrow(() -> new ExceptionNotFound("Id not found"));
@@ -59,10 +65,5 @@ public class VideoService {
         videoDto.setCategory(
                 categoryRepository.findById(videoDto.getCategory().getId())
                         .orElseThrow(() -> new ExceptionNotFound("Id not found")));
-    }
-
-    public Page<VideoDto> getByTitleVideo(String title, Pageable pageable) {
-        var page = videoRepository.findByTitleContains(title, pageable);
-        return mapper.toVideoDto(page.getContent());
     }
 }

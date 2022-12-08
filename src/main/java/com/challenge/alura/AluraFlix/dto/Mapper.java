@@ -9,18 +9,17 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Component
 public class Mapper {
 
     public Category toCategory(CategoryDto categoryDto){
-        return (Category) Stream.of(categoryDto).map(Category::new);
+        return new Category(categoryDto);
     }
 
     public CategoryDto toCategoryDto(Category category){
-        return new CategoryDto(category.getId(), category.getTitle(), category.getColor());
+        return new CategoryDto(category);
     }
 
     public Page<CategoryDto> toCategoryDto(List<Category> categories) {
@@ -28,11 +27,11 @@ public class Mapper {
     }
 
     public Video toVideo(VideoDto videoDto){
-        return (Video) Stream.of(videoDto).map(Video::new);
+        return new Video(videoDto);
     }
 
     public VideoDto toVideoDto(Video video){
-        return (VideoDto) Stream.of(video).map(VideoDto::new);
+        return new VideoDto(video);
     }
 
     public Page<VideoDto> toVideoDto(Collection<Video> videos){
