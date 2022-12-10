@@ -1,5 +1,7 @@
-package com.challenge.alura.AluraFlix.dto;
+package com.challenge.alura.AluraFlix.dto.mapper;
 
+import com.challenge.alura.AluraFlix.dto.CategoryDto;
+import com.challenge.alura.AluraFlix.dto.VideoDto;
 import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import org.springframework.data.domain.Page;

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Data
 @Document(collection = "collection_category")
-public class Category {
+public class Category{
 
     @Id
     private String id;

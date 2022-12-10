@@ -1,7 +1,7 @@
 package com.challenge.alura.AluraFlix.services;
 
 import com.challenge.alura.AluraFlix.dto.CategoryDto;
-import com.challenge.alura.AluraFlix.dto.Mapper;
+import com.challenge.alura.AluraFlix.dto.mapper.Mapper;
 import com.challenge.alura.AluraFlix.entities.Category;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;

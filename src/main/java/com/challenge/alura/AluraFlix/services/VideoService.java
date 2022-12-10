@@ -1,6 +1,6 @@
 package com.challenge.alura.AluraFlix.services;
 
-import com.challenge.alura.AluraFlix.dto.Mapper;
+import com.challenge.alura.AluraFlix.dto.mapper.Mapper;
 import com.challenge.alura.AluraFlix.dto.VideoDto;
 import com.challenge.alura.AluraFlix.entities.Video;
 import com.challenge.alura.AluraFlix.exception.ExceptionNotFound;

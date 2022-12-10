@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Builder
 @Document(collection = "collection_video")
-public class Video {
+public class Video{
     @Id
     private  String id;
     @NotBlank
