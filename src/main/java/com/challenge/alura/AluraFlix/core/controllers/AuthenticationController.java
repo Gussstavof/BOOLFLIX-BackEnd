@@ -17,18 +17,18 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/authentication")
-public class AuthController {
+public class AuthenticationController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
     TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<Object> auth(@Valid @RequestBody UserDto userDto) throws Exception {
+    public ResponseEntity<Object> auth(@Valid @RequestBody UserDto userDto){
         String token = tokenService.generateToken(
                 authenticationManager.authenticate(
                         parseUsernamePassword(userDto)));
-        return ResponseEntity.ok(new TokenDto(token, "Bearer"));
+        return ResponseEntity.ok(new TokenDto(token));
     }
 
     private UsernamePasswordAuthenticationToken parseUsernamePassword(UserDto userDto) {

@@ -11,5 +11,4 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class TokenDto {
     private String token;
-    private String type;
 }

@@ -1,14 +1,15 @@
 package com.challenge.alura.AluraFlix.core.services;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.challenge.alura.AluraFlix.core.entities.users.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Date;
 
 @Service
 public class TokenService {
@@ -21,12 +22,30 @@ public class TokenService {
 
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return Jwts.builder()
-                .setIssuer("API da plataforma de curso")
-                .setSubject(user.getId())
-                .setIssuedAt(Date.from(Instant.ofEpochSecond(1466796822L)))
-                .setExpiration(Date.from(Instant.ofEpochSecond(4622470422L)))
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
+        try {
+           return JWT.create()
+                    .withSubject(user.getUsername())
+                    .withIssuer("aluraFlix")
+                    .withExpiresAt(Instant.now().plusMillis(7200000L))
+                    .sign(getAlgorithm());
+        } catch (JWTCreationException exception){
+            throw new CredentialsInvalidException("Invalid Token");
+        }
+    }
+
+    public String getSubject(String token){
+        try {
+            return JWT.require(getAlgorithm())
+                    .withIssuer("aluraFlix")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        }catch (JWTCreationException exception){
+            throw new CredentialsInvalidException("Invalid Token");
+        }
+    }
+
+    private Algorithm getAlgorithm(){
+        return Algorithm.HMAC256(secret);
     }
 }

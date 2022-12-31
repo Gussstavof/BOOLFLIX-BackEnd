@@ -14,23 +14,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations{
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/categories/").permitAll()
-                .antMatchers(HttpMethod.GET, "/videos/").permitAll()
-                .antMatchers(HttpMethod.POST, "/authentication/").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().build();
+         return httpSecurity.csrf().disable()
+                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                 .and().authorizeHttpRequests()
+                 .antMatchers(HttpMethod.POST,"/authentication").permitAll()
+                 .anyRequest().authenticated()
+                 .and().build();
     }
 
     @Bean
