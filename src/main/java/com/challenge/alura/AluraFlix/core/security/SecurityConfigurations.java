@@ -30,6 +30,11 @@ public class SecurityConfigurations{
                  .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                  .and().authorizeHttpRequests()
+                 .antMatchers(HttpMethod.POST, "/videos/").hasRole("ADM")
+                 .antMatchers(HttpMethod.DELETE, "/videos/*").hasRole("ADM")
+                 .antMatchers(HttpMethod.PUT, "/videos/*").hasRole("ADM")
+                 .antMatchers(HttpMethod.POST, "/categories").hasRole("ADM")
+                 .antMatchers(HttpMethod.PUT, "/categories/*").hasRole("ADM")
                  .antMatchers(HttpMethod.POST,"/authentication").permitAll()
                  .anyRequest().authenticated()
                  .and().build();
