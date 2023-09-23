@@ -1,18 +1,18 @@
-package com.challenge.alura.AluraFlix.core.security;
+package com.challenge.alura.AluraFlix.infra.security.config;
 
 import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import com.challenge.alura.AluraFlix.core.repositories.UserRepository;
-import com.challenge.alura.AluraFlix.core.services.TokenService;
+import com.challenge.alura.AluraFlix.infra.security.services.TokenService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -29,24 +29,25 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private String getToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader("Authorization"))
-                .orElse(null);
+        return request.getHeader("Authorization");
     }
 
     private void checkToken(HttpServletRequest request){
-       var token = getToken(request);
+        var token = getToken(request);
         if (token != null){
-           var subject = tokenService.getSubject(token.replace("Bearer", "").trim());
-           checkUser(subject);
+            var subject = tokenService.getSubject(token.replace("Bearer", "").trim());
+            checkUser(subject);
         }
     }
 
     private void checkUser(String subject){
-        var user = userRepository.findByUsername(subject)
-                 .orElseThrow(() -> new CredentialsInvalidException("Invalid credentials"));
+        var user = userRepository.findByEmail(subject)
+                .orElseThrow(() -> new CredentialsInvalidException("Invalid credentials"));
         SecurityContextHolder.getContext()
-                .setAuthentication( new UsernamePasswordAuthenticationToken(user,
-                        null, user.getAuthorities()));
+                .setAuthentication(new UsernamePasswordAuthenticationToken(
+                        user,
+                        null,
+                        user.getAuthorities()
+                ));
     }
-
 }

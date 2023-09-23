@@ -1,13 +1,12 @@
 package com.challenge.alura.AluraFlix.core.entities.categories;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
-import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -2,6 +2,7 @@ package com.challenge.alura.AluraFlix.core.controllers;
 
 import com.challenge.alura.AluraFlix.core.entities.videos.VideoDto;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,7 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 
 @RestController

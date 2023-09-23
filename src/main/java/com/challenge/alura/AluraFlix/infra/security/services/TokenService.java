@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.services;
+package com.challenge.alura.AluraFlix.infra.security.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -15,37 +15,36 @@ import java.time.Instant;
 public class TokenService {
 
     @Value("${alura.jwt.expiration}")
-    private String expirationTime;
-
-    @Value("${alura.jwt.secret}")
-    private String secret;
+    private Long expirationTime;
+    @Value("${alura.jwt.key}")
+    private String key;
 
     public String generateToken(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
         try {
-           return JWT.create()
+            User user = (User) authentication.getPrincipal();
+            return JWT.create()
                     .withSubject(user.getUsername())
                     .withIssuer("aluraFlix")
-                    .withExpiresAt(Instant.now().plusMillis(7200000L))
+                    .withExpiresAt(Instant.now().plusMillis(expirationTime))
                     .sign(getAlgorithm());
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new CredentialsInvalidException("Invalid Token");
         }
     }
 
-    public String getSubject(String token){
+    public String getSubject(String token) {
         try {
             return JWT.require(getAlgorithm())
                     .withIssuer("aluraFlix")
                     .build()
                     .verify(token)
                     .getSubject();
-        }catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new CredentialsInvalidException("Invalid Token");
         }
     }
 
-    private Algorithm getAlgorithm(){
-        return Algorithm.HMAC256(secret);
+    private Algorithm getAlgorithm() {
+        return Algorithm.HMAC256(key);
     }
 }

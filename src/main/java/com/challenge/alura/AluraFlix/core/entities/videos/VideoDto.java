@@ -1,12 +1,11 @@
 package com.challenge.alura.AluraFlix.core.entities.videos;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor

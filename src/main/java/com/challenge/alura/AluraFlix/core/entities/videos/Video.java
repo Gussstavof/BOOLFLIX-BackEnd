@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Data
