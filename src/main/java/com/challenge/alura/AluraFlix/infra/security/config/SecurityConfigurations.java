@@ -1,12 +1,10 @@
 package com.challenge.alura.AluraFlix.infra.security.config;
 
-import com.challenge.alura.AluraFlix.infra.security.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,8 +21,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 public class SecurityConfigurations {
     @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
     private SecurityFilter securityFilter;
 
     @Bean
@@ -32,7 +28,7 @@ public class SecurityConfigurations {
         return http.csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/authentication/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/videos/**").hasRole("ADM")
+                        .requestMatchers(HttpMethod.POST, "/videos").hasRole("ADM")
                         .requestMatchers(HttpMethod.PUT, "/videos/**").hasRole("ADM")
                         .requestMatchers(HttpMethod.PATCH, "/videos/**").hasRole("ADM")
                         .requestMatchers(HttpMethod.POST, "/categories/**").hasRole("ADM")
@@ -51,15 +47,8 @@ public class SecurityConfigurations {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authenticationService)
-                .passwordEncoder(passwordEncoder());
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

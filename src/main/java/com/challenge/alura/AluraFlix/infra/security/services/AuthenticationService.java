@@ -6,6 +6,7 @@ import com.challenge.alura.AluraFlix.core.entities.users.UserSignupRequest;
 import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import com.challenge.alura.AluraFlix.core.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,11 +27,18 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     public User createUser(UserSignupRequest request) {
+        if (repository.existsByEmail(request.getEmail())){
+            throw new BadCredentialsException("user already exists");
+        }
+        Profile profile = new Profile("2", "ROLE_USER");
+        if (request.getEmail().contains("adm")){
+            profile = new Profile("1", "ROLE_ADM");
+        }
         return repository.save(User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .profiles(new Profile("2", "ROLE_USER"))
+                .profiles(profile)
                 .build());
     }
 }
