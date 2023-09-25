@@ -1,6 +1,7 @@
 package com.challenge.alura.AluraFlix.core.controllers;
 
-import com.challenge.alura.AluraFlix.core.entities.videos.VideoDto;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoRequest;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.List;
 
 
 @ExtendWith(SpringExtension.class)
@@ -33,21 +35,35 @@ class VideoControllerTest {
     @Mock
     private VideoService videoService;
 
-    VideoDto videoUpdateDto;
-    VideoDto videoDto;
+    VideoRequest videoUpdateRequest;
+    VideoResponse videoUpdateResponse;
+    VideoRequest videoRequest;
+    VideoResponse videoResponse;
     URI location;
     Pageable pageable;
 
     @BeforeEach
     void setUp(){
-        videoDto = VideoDto.builder()
+        videoRequest = VideoRequest.builder()
+                .id("1")
+                .title("testando")
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .build();
+        videoResponse = VideoResponse.builder()
                 .id("1")
                 .title("testando")
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
 
-        videoUpdateDto = VideoDto.builder()
+        videoUpdateResponse = VideoResponse.builder()
+                .id("1")
+                .title("testando2")
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .build();
+        videoUpdateRequest = VideoRequest.builder()
                 .id("1")
                 .title("testando2")
                 .description("testandoController")
@@ -57,48 +73,48 @@ class VideoControllerTest {
 
     @Test
     void videoResponseEntitySaveTest(){
-        when(videoService.saveVideo(videoDto))
-                .thenReturn(videoDto);
+        when(videoService.saveVideo(videoRequest))
+                .thenReturn(videoResponse);
 
         var result = videoController
-                .videoResponseEntitySave(videoDto, location);
+                .videoResponseEntitySave(videoRequest, location);
 
-        assertEquals(result, ResponseEntity.created(location).body(videoDto));
+        assertEquals(result, ResponseEntity.created(location).body(videoResponse));
     }
 
     @Test
     void videoDtoResponseEntityGetAllTest() {
-        Page<VideoDto> videosDto = new PageImpl<>(Collections.singletonList(videoDto));
+        Page<VideoResponse> videosResponse = new PageImpl<>(Collections.singletonList(videoResponse));
 
         when(videoService.getAllVideos(pageable))
-                .thenReturn(videosDto);
+                .thenReturn(new PageImpl<>(List.of(videoResponse)));
 
        var result = videoController
                 .videoDtoResponseEntityGetAll(pageable);
 
-        assertEquals(result, ResponseEntity.ok(videosDto));
+        assertEquals(ResponseEntity.ok(videosResponse), result);
     }
 
     @Test
     void videoDtoResponseEntityGetByIdTest() {
         when(videoService.getByIdVideo("1"))
-                .thenReturn(videoDto);
+                .thenReturn(videoResponse);
 
         var result = videoController
                 .videoDtoResponseEntityGetById("1");
 
-        assertEquals(result, ResponseEntity.ok(videoDto));
+        assertEquals(result, ResponseEntity.ok(videoResponse));
     }
 
     @Test
     void videoResponseEntityUpdateTest(){
-        when(videoService.updateVideo("1", videoUpdateDto))
-                .thenReturn(videoUpdateDto);
+        when(videoService.updateVideo("1", videoUpdateRequest))
+                .thenReturn(videoUpdateResponse);
 
         var result = videoController
-                .videoResponseEntityUpdate("1", videoUpdateDto);
+                .videoResponseEntityUpdate("1", videoUpdateRequest);
 
-        assertEquals(result, ResponseEntity.ok(videoUpdateDto));
+        assertEquals(result, ResponseEntity.ok(videoUpdateResponse));
     }
 
     @Test
@@ -113,7 +129,7 @@ class VideoControllerTest {
 
     @Test
     void videoResponseEntityGetByTitleTest(){
-        Page<VideoDto> videosDto = new PageImpl<>(Collections.singletonList(videoDto));
+        Page<VideoResponse> videosDto = new PageImpl<>(Collections.singletonList(videoResponse));
 
         when(videoService.getByTitleVideo("Java", pageable))
                 .thenReturn(videosDto);

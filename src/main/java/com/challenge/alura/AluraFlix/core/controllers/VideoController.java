@@ -1,6 +1,7 @@
 package com.challenge.alura.AluraFlix.core.controllers;
 
-import com.challenge.alura.AluraFlix.core.entities.videos.VideoDto;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoRequest;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +23,27 @@ public class VideoController {
 
     @PostMapping
     @CacheEvict(value = "get_all_videos", allEntries = true)
-    public ResponseEntity<VideoDto> videoResponseEntitySave(@Valid @RequestBody VideoDto videoDto,
-                                                         URI location){
-        return ResponseEntity.created(location).body(videoService.saveVideo(videoDto));
+    public ResponseEntity<VideoResponse> videoResponseEntitySave(@Valid @RequestBody VideoRequest videoRequest,
+                                                                 URI location){
+        return ResponseEntity.created(location).body(videoService.saveVideo(videoRequest));
     }
 
     @GetMapping
     @Cacheable(value = "get_all_videos")
-    public ResponseEntity<Page<VideoDto>> videoDtoResponseEntityGetAll(@PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity<Page<VideoResponse>> videoDtoResponseEntityGetAll(@PageableDefault(size = 5) Pageable pageable){
         return ResponseEntity.ok(videoService.getAllVideos(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VideoDto> videoDtoResponseEntityGetById(@PathVariable String id){
+    public ResponseEntity<VideoResponse> videoDtoResponseEntityGetById(@PathVariable String id){
         return ResponseEntity.ok(videoService.getByIdVideo(id));
     }
 
     @PutMapping("/{id}")
     @CacheEvict(value = "get_all_videos", allEntries = true)
-    public ResponseEntity<VideoDto> videoResponseEntityUpdate(@PathVariable String id,
-                                                           @Valid @RequestBody VideoDto videoDto){
-        return ResponseEntity.ok(videoService.updateVideo(id, videoDto));
+    public ResponseEntity<VideoResponse> videoResponseEntityUpdate(@PathVariable String id,
+                                                                  @Valid @RequestBody VideoRequest videoRequest){
+        return ResponseEntity.ok(videoService.updateVideo(id, videoRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -53,8 +54,8 @@ public class VideoController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<VideoDto>> videoResponseEntityGetByTitle(@RequestParam("title") String title,
-    @PageableDefault  Pageable pageable){
+    public ResponseEntity<Page<VideoResponse>> videoResponseEntityGetByTitle(@RequestParam("title") String title,
+                                                                            @PageableDefault  Pageable pageable){
         return ResponseEntity.ok(videoService.getByTitleVideo(title, pageable));
     }
 }

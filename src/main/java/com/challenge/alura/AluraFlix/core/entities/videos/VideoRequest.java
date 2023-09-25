@@ -4,31 +4,23 @@ import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Component
-public class VideoDto {
-    @NotBlank
+public class VideoRequest {
     private  String id;
-    @NotBlank
     private String title;
-    @NotBlank
     private String description;
     private Category category;
-    @NotBlank
-    @URL
     private String url;
 
-    public VideoDto(Video video) {
-        this.id = video.getId();
-        this.title = video.getTitle();
-        this.description = video.getDescription();
-        this.category = video.getCategory();
-        this.url = video.getUrl();
+    public Video toVideo() {
+        Video video = new Video();
+        BeanUtils.copyProperties(this, video);
+        return video;
     }
 }

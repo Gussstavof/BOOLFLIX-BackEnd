@@ -28,12 +28,4 @@ public class Video{
     @NotBlank
     @URL
     private String url;
-
-    public Video(VideoDto videoDto) {
-        this.id = videoDto.getId();
-        this.title = videoDto.getTitle();
-        this.description = videoDto.getDescription();
-        this.category = videoDto.getCategory();
-        this.url = videoDto.getUrl();
-    }
 }

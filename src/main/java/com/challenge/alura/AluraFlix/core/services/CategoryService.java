@@ -1,7 +1,6 @@
 package com.challenge.alura.AluraFlix.core.services;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.CategoryRequest;
-import com.challenge.alura.AluraFlix.core.entities.Mapper;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import com.challenge.alura.AluraFlix.core.entities.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;

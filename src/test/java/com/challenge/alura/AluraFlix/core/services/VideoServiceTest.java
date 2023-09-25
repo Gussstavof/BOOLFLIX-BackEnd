@@ -1,9 +1,9 @@
 package com.challenge.alura.AluraFlix.core.services;
 
-import com.challenge.alura.AluraFlix.core.entities.Mapper;
-import com.challenge.alura.AluraFlix.core.entities.videos.VideoDto;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import com.challenge.alura.AluraFlix.core.entities.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.exception.ExceptionNotFound;
 import com.challenge.alura.AluraFlix.core.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.core.repositories.VideoRepository;
@@ -31,13 +31,12 @@ class VideoServiceTest {
     VideoRepository videoRepository;
     @Mock
     CategoryRepository categoryRepository;
-    @Mock
-    Mapper mapper;
 
     Video video;
     Video videoUpdate;
-    VideoDto videoDto;
-    VideoDto videoUpdateDto;
+    VideoRequest videoRequest;
+    VideoRequest videoUpdateRequest;
+    VideoResponse videoUpdateResponse;
     Category category;
     Category categoryId;
     Pageable pageable;
@@ -48,7 +47,7 @@ class VideoServiceTest {
                 .id("1")
                 .build();
 
-        videoDto = VideoDto.builder()
+        videoRequest = VideoRequest.builder()
                 .id("1")
                 .title("testando")
                 .description("testandoController")
@@ -56,7 +55,15 @@ class VideoServiceTest {
                 .url("https://www.youtube.com/")
                 .build();
 
-        videoUpdateDto = VideoDto.builder()
+        videoUpdateRequest = VideoRequest.builder()
+                .id("1")
+                .title("testando2")
+                .category(categoryId)
+                .description("testandoController")
+                .url("https://www.youtube.com/")
+                .build();
+
+        videoUpdateResponse = VideoResponse.builder()
                 .id("1")
                 .title("testando2")
                 .category(categoryId)
@@ -89,43 +96,41 @@ class VideoServiceTest {
 
     @Test
     void saveVideoTest() {
-        when(videoRepository.save(video))
+        when(videoRepository.save(any()))
                 .thenReturn(video);
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.of(category));
-        when(mapper.toVideo(videoDto))
-                .thenReturn(video);
 
-        VideoDto videoResponse = videoService.saveVideo(videoDto);
+        VideoResponse result = videoService.saveVideo(videoRequest);
 
-        assertSame(videoResponse, videoDto);
+        assertEquals(new VideoResponse(video), result);
     }
 
     @Test
     void  getAllTest(){
         Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
-        Page<VideoDto> videosDto = new PageImpl<>(Collections.singletonList(videoDto));
+        Page<VideoResponse> videosDto = new PageImpl<>(
+                Collections.singletonList(
+                    new VideoResponse(video)
+                )
+        );
 
         when(videoRepository.findAll(pageable))
                 .thenReturn(videos);
-        when(mapper.toVideoDto(videos.getContent()))
-                .thenReturn(videosDto);
 
-        var videosResponse = videoService.getAllVideos(pageable);
+        var result = videoService.getAllVideos(pageable);
 
-        assertSame(videosResponse, videosDto);
+        assertEquals(videosDto, result);
     }
 
     @Test
     void  getVideoByIdTest(){
        when(videoRepository.findById("1"))
                .thenReturn(java.util.Optional.ofNullable(video));
-       when(mapper.toVideoDto(video))
-               .thenReturn(videoDto);
 
-       var videoResponse = videoService.getByIdVideo("1");
+       var result = videoService.getByIdVideo("1");
 
-       assertSame(videoResponse, videoDto);
+       assertEquals(new VideoResponse(video), result);
     }
 
     @Test
@@ -142,12 +147,10 @@ class VideoServiceTest {
                 .thenReturn(Optional.of(video));
         when(videoRepository.save(videoUpdate))
                 .thenReturn(videoUpdate);
-        when(mapper.toVideoDto(videoUpdate))
-                .thenReturn(videoUpdateDto);
 
-        var result = videoService.updateVideo("1", videoUpdateDto);
+        var result = videoService.updateVideo("1", videoUpdateRequest);
 
-        assertSame(result, videoUpdateDto);
+        assertEquals(videoUpdateResponse, result);
     }
 
     @Test
@@ -167,15 +170,17 @@ class VideoServiceTest {
     @Test
     void getVideoByTitleTest(){
         Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
-        Page<VideoDto> videosDto = new PageImpl<>(Collections.singletonList(videoDto));
+        Page<VideoResponse> videosDto = new PageImpl<>(
+                Collections.singletonList(
+                        new VideoResponse(video)
+                )
+        );
 
         when(videoRepository.findByTitleContains("Java",pageable))
                 .thenReturn(videos);
-        when(mapper.toVideoDto(videos.getContent()))
-                .thenReturn(videosDto);
 
         var result = videoService.getByTitleVideo("Java",pageable);
 
-        assertEquals(result, videosDto);
+        assertEquals(videosDto, result);
     }
 }
