@@ -1,6 +1,7 @@
 package com.challenge.alura.AluraFlix.core.controllers;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.CategoryDto;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryRequest;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.services.CategoryService;
 import jakarta.validation.Valid;
@@ -23,18 +24,18 @@ public class CategoryController {
 
     @PostMapping
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<CategoryDto> saveCategoryResponseEntity(@Valid @RequestBody CategoryDto category,
-                                                                  URI uri){
+    public ResponseEntity<CategoryResponse> saveCategoryResponseEntity(@Valid @RequestBody CategoryRequest category,
+                                                                       URI uri){
         return ResponseEntity.created(uri).body(categoryService.save(category));
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDto>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity<Page<CategoryResponse>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable){
         return ResponseEntity.ok(categoryService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getByIdResponseEntity(@PathVariable String id){
+    public ResponseEntity<CategoryResponse> getByIdResponseEntity(@PathVariable String id){
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
@@ -47,14 +48,14 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<CategoryDto> updateByIdCategoryResponseEntity(@Valid @RequestBody CategoryDto categoryDto,
-                                                                        @PathVariable String id){
-        return ResponseEntity.ok(categoryService.update(id, categoryDto));
+    public ResponseEntity<CategoryResponse> updateByIdCategoryResponseEntity(@Valid @RequestBody CategoryRequest categoryRequest,
+                                                                            @PathVariable String id){
+        return ResponseEntity.ok(categoryService.update(id, categoryRequest));
     }
 
     @DeleteMapping("/{id}")
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<String> deleteCategoryResponseEntity(String id) {
+    public ResponseEntity<String> deleteCategoryResponseEntity(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok("deleted");
     }

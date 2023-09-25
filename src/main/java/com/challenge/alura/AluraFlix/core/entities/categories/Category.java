@@ -14,17 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document(collection = "collection_category")
 public class Category{
-
     @Id
     private String id;
     @NotBlank
     private String title;
     @NotBlank
     private String color;
-
-    public Category(CategoryDto categoryDto) {
-        this.id = categoryDto.getId();
-        this.title = categoryDto.getTitle();
-        this.color = categoryDto.getColor();
-    }
 }

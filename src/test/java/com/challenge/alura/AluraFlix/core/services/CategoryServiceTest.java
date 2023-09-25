@@ -1,8 +1,8 @@
 package com.challenge.alura.AluraFlix.core.services;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.CategoryDto;
-import com.challenge.alura.AluraFlix.core.entities.Mapper;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryRequest;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.core.repositories.VideoRepository;
@@ -31,19 +31,17 @@ class CategoryServiceTest {
     CategoryRepository categoryRepository;
     @Mock
     VideoRepository videoRepository;
-    @Mock
-    Mapper mapper;
 
     Category categoryUpdate;
     Category category;
-    CategoryDto categoryUpdateDto;
-    CategoryDto categoryDto;
+    CategoryResponse categoryResponse;
+    CategoryRequest categoryRequest;
     Video video;
     Pageable pageable;
 
     @BeforeEach
     void setUp() {
-        categoryDto = CategoryDto.builder()
+        categoryRequest = CategoryRequest.builder()
                 .id("1")
                 .title("Back-End")
                 .color("#00008B")
@@ -53,10 +51,10 @@ class CategoryServiceTest {
                 .title("Back-End")
                 .color("#00008B")
                 .build();
-        categoryUpdateDto = CategoryDto.builder()
+        categoryResponse = CategoryResponse.builder()
                 .id("1")
-                .title("Front-End")
-                .color("#00000B")
+                .title("Back-End")
+                .color("#00008B")
                 .build();
         categoryUpdate = Category.builder()
                 .id("1")
@@ -76,24 +74,19 @@ class CategoryServiceTest {
     void saveCategoryTest() {
         when(categoryRepository.save(category))
                 .thenReturn(category);
-        when(mapper.toCategoryDto(category))
-                .thenReturn(categoryDto);
-        when(mapper.toCategory(categoryDto))
-                .thenReturn(category);
-        var result = categoryService.save(categoryDto);
 
-        assertSame(result, categoryDto);
+        CategoryResponse result = categoryService.save(categoryRequest);
+
+        assertEquals(categoryResponse, result);
     }
 
     @Test
-    void getAllVideosTest(){
+    void getAllVideosTest() {
         var categories = new PageImpl<>(Collections.singletonList(category));
-        var categoriesDto = new PageImpl<>(Collections.singletonList(categoryDto));
+        var categoriesDto = new PageImpl<>(Collections.singletonList(categoryResponse));
 
         when(categoryRepository.findAll(pageable))
                 .thenReturn(categories);
-        when(mapper.toCategoryDto(categories.getContent()))
-                .thenReturn(categoriesDto);
 
         var result = categoryService.getAll(pageable);
 
@@ -101,46 +94,40 @@ class CategoryServiceTest {
     }
 
     @Test
-    void getByIdCategoryTest(){
+    void getByIdCategoryTest() {
         when(categoryRepository.findById("1"))
                 .thenReturn(ofNullable(category));
-        when(mapper.toCategoryDto(category))
-                .thenReturn(categoryDto);
 
         var result = categoryService.getById("1");
 
-        assertSame(result, categoryDto);
+        assertEquals(result, categoryResponse);
     }
 
     @Test
-    void updateCategoryTest(){
+    void updateCategoryTest() {
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
-        when(mapper.toCategoryDto(categoryUpdate))
-                .thenReturn(categoryUpdateDto);
-        when(categoryRepository.save(categoryUpdate))
+        when(categoryRepository.save(any()))
                 .thenReturn(categoryUpdate);
 
-        var result = categoryService.update("1", categoryUpdateDto);
+        var result = categoryService.update("1", categoryRequest);
 
-        assertInstanceOf(CategoryDto.class, result);
-        assertEquals(categoryUpdate.getTitle(), result.getTitle());
-
+        assertInstanceOf(CategoryResponse.class, result);
+        assertEquals(new CategoryResponse(categoryUpdate), result);
     }
 
     @Test
-    void deleteVideoTest(){
+    void deleteVideoTest() {
         doNothing()
                 .when(categoryRepository)
                 .deleteById("1");
         categoryService.deleteCategory("1");
         verify(categoryRepository).deleteById(category.getId());
-
     }
 
     @Test
-    void getVideosByCategoryTest(){
-       Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
+    void getVideosByCategoryTest() {
+        Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
         when(videoRepository.findByCategory(category, pageable))

@@ -1,7 +1,8 @@
 package com.challenge.alura.AluraFlix.core.controllers;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.CategoryDto;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryRequest;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import com.challenge.alura.AluraFlix.core.entities.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,8 @@ class CategoryControllerTest {
     CategoryService categoryService;
 
     Category category;
-    CategoryDto categoryDto;
+    CategoryRequest categoryRequest;
+    CategoryResponse categoryResponse;
     Video video;
     URI location;
     Pageable pageable;
@@ -48,27 +50,31 @@ class CategoryControllerTest {
                 .category(category)
                 .url("https://www.youtube.com/")
                 .build();
-        categoryDto = CategoryDto.builder()
+        categoryRequest = CategoryRequest.builder()
                 .id("1")
                 .title("Front-End")
                 .color("#00008B")
+                .build();
+        categoryResponse = CategoryResponse.builder()
+                .id("1")
+                .title("Front-End")
                 .build();
     }
 
     @Test
     void saveCategoryResponseEntityTest() {
-        when(categoryService.save(categoryDto))
-                .thenReturn(categoryDto);
+        when(categoryService.save(categoryRequest))
+                .thenReturn(categoryResponse);
 
         var result = categoryController
-                .saveCategoryResponseEntity(categoryDto, location);
+                .saveCategoryResponseEntity(categoryRequest, location);
 
-        assertEquals(result, ResponseEntity.created(location).body(categoryDto));
+        assertEquals(result, ResponseEntity.created(location).body(categoryResponse));
     }
 
     @Test
     void getAllCategoriesResponseEntityTest(){
-        var categoriesDto = new PageImpl<>(Collections.singletonList(categoryDto));
+        var categoriesDto = new PageImpl<>(Collections.singletonList(categoryResponse));
         when(categoryService.getAll(pageable))
                 .thenReturn(categoriesDto);
 
@@ -81,23 +87,23 @@ class CategoryControllerTest {
     @Test
     void getByIdCategoryResponseEntityTest(){
         when(categoryService.getById("1"))
-                .thenReturn(categoryDto);
+                .thenReturn(categoryResponse);
 
         var result = categoryController
                 .getByIdResponseEntity("1");
 
-        assertEquals(result, ResponseEntity.ok(categoryDto));
+        assertEquals(result, ResponseEntity.ok(categoryResponse));
     }
 
     @Test
     void updateByIdCategoryResponseEntityTest(){
-        when(categoryService.update("1", categoryDto))
-                .thenReturn(categoryDto);
+        when(categoryService.update("1", categoryRequest))
+                .thenReturn(categoryResponse);
 
         var result = categoryController
-                .updateByIdCategoryResponseEntity(categoryDto,"1");
+                .updateByIdCategoryResponseEntity(categoryRequest,"1");
 
-        assertEquals(result, ResponseEntity.ok(categoryDto));
+        assertEquals(result, ResponseEntity.ok(categoryResponse));
     }
 
     @Test
