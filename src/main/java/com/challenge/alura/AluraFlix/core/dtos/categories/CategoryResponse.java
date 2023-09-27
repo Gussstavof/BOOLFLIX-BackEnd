@@ -1,5 +1,6 @@
-package com.challenge.alura.AluraFlix.core.entities.categories;
+package com.challenge.alura.AluraFlix.core.dtos.categories;
 
+import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.beans.BeanUtils;

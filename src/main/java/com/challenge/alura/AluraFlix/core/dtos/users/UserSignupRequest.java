@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.entities.users;
+package com.challenge.alura.AluraFlix.core.dtos.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

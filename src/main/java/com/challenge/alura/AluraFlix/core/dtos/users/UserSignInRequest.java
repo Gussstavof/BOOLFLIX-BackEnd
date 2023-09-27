@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.entities.users;
+package com.challenge.alura.AluraFlix.core.dtos.users;
 
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -9,9 +9,9 @@ import jakarta.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UserDto {
+public class UserSignInRequest {
     @Email
-    private String username;
+    private String email;
     @NotBlank
     private String password;
 }

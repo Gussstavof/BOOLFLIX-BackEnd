@@ -1,6 +1,7 @@
-package com.challenge.alura.AluraFlix.core.entities.videos;
+package com.challenge.alura.AluraFlix.core.dtos.videos;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

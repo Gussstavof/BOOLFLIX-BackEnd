@@ -3,9 +3,9 @@ package com.challenge.alura.AluraFlix.infra.security.services;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.challenge.alura.AluraFlix.core.entities.tokens.TokenDto;
+import com.challenge.alura.AluraFlix.core.dtos.tokens.TokenResponse;
 import com.challenge.alura.AluraFlix.core.entities.users.User;
-import com.challenge.alura.AluraFlix.core.entities.users.UserDto;
+import com.challenge.alura.AluraFlix.core.dtos.users.UserSignInRequest;
 import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,11 +25,11 @@ public class TokenService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public TokenDto getToken(UserDto userDto) {
-        return new TokenDto(
+    public TokenResponse getToken(UserSignInRequest userSignInRequest) {
+        return new TokenResponse(
                 generateToken(
                         authenticationManager.authenticate(
-                                parseUsernamePassword(userDto)
+                                parseUsernamePassword(userSignInRequest)
                         )
                 )
         );
@@ -60,8 +60,8 @@ public class TokenService {
         }
     }
 
-    private UsernamePasswordAuthenticationToken parseUsernamePassword(UserDto userDto) {
-        return new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword());
+    private UsernamePasswordAuthenticationToken parseUsernamePassword(UserSignInRequest userSignInRequest) {
+        return new UsernamePasswordAuthenticationToken(userSignInRequest.getEmail(), userSignInRequest.getPassword());
     }
 
     private Algorithm getAlgorithm() {

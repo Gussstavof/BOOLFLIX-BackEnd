@@ -2,7 +2,7 @@ package com.challenge.alura.AluraFlix.infra.security.services;
 
 import com.challenge.alura.AluraFlix.core.entities.profiles.Profile;
 import com.challenge.alura.AluraFlix.core.entities.users.User;
-import com.challenge.alura.AluraFlix.core.entities.users.UserSignupRequest;
+import com.challenge.alura.AluraFlix.core.dtos.users.UserSignupRequest;
 import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import com.challenge.alura.AluraFlix.core.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

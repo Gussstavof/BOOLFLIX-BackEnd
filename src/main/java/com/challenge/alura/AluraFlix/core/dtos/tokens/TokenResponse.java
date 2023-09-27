@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.entities.tokens;
+package com.challenge.alura.AluraFlix.core.dtos.tokens;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenDto {
+public class TokenResponse {
     private String token;
 }
