@@ -24,32 +24,38 @@ public class CategoryController {
 
     @PostMapping
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<CategoryResponse> saveCategoryResponseEntity(@Valid @RequestBody CategoryRequest category,
-                                                                       URI uri){
+    public ResponseEntity<CategoryResponse> saveCategoryResponseEntity(
+            @Valid @RequestBody CategoryRequest category,
+            URI uri
+    ) {
         return ResponseEntity.created(uri).body(categoryService.save(category));
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoryResponse>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity<Page<CategoryResponse>> getAllResponseEntity(@PageableDefault(size = 5) Pageable pageable) {
         return ResponseEntity.ok(categoryService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getByIdResponseEntity(@PathVariable String id){
+    public ResponseEntity<CategoryResponse> getByIdResponseEntity(@PathVariable String id) {
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
     @GetMapping("/{id}/videos")
     @Cacheable(value = "get_by_category")
-    public ResponseEntity<Page<Video>> getVideosByCategoryResponseEntity(@PathVariable String id,
-                                                                         @PageableDefault Pageable pageable){
+    public ResponseEntity<Page<Video>> getVideosByCategoryResponseEntity(
+            @PathVariable String id,
+            @PageableDefault Pageable pageable
+    ) {
         return ResponseEntity.ok(categoryService.getVideosByCategory(id, pageable));
     }
 
     @PutMapping("/{id}")
     @CacheEvict(value = "get_by_category", allEntries = true)
-    public ResponseEntity<CategoryResponse> updateByIdCategoryResponseEntity(@Valid @RequestBody CategoryRequest categoryRequest,
-                                                                            @PathVariable String id){
+    public ResponseEntity<CategoryResponse> updateByIdCategoryResponseEntity(
+            @Valid @RequestBody CategoryRequest categoryRequest,
+            @PathVariable String id
+    ) {
         return ResponseEntity.ok(categoryService.update(id, categoryRequest));
     }
 

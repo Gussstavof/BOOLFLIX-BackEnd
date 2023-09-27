@@ -127,6 +127,4 @@ class CategoryControllerTest {
 
         assertEquals(result, ResponseEntity.ok(videos));
     }
-
-
 }

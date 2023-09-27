@@ -15,6 +15,7 @@ public class CategoryResponse {
         private String id;
         private String title;
         private String color;
+
         public CategoryResponse(Category category) {
                 this.id = category.getId();
                 this.title = category.getTitle();
