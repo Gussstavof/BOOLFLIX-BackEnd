@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseBody
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class CredentialsInvalidException extends RuntimeException{
-    public CredentialsInvalidException(String message){
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
         super(message);
     }
 }

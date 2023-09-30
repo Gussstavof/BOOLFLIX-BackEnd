@@ -6,10 +6,10 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.challenge.alura.AluraFlix.core.dtos.tokens.TokenResponse;
 import com.challenge.alura.AluraFlix.core.entities.users.User;
 import com.challenge.alura.AluraFlix.core.dtos.users.UserSignInRequest;
-import com.challenge.alura.AluraFlix.core.exception.CredentialsInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTCreationException exception) {
-            throw new CredentialsInvalidException("Invalid Token");
+            throw new BadCredentialsException("Invalid Token");
         }
     }
 
@@ -56,7 +56,7 @@ public class TokenService {
                     .withExpiresAt(Instant.now().plusMillis(expirationTime))
                     .sign(getAlgorithm());
         } catch (JWTCreationException exception) {
-            throw new CredentialsInvalidException("Invalid Token");
+            throw new BadCredentialsException("Invalid Token");
         }
     }
 

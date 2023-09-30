@@ -3,7 +3,8 @@ package com.challenge.alura.AluraFlix.core.services;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;
-import com.challenge.alura.AluraFlix.core.exception.ExceptionNotFound;
+import com.challenge.alura.AluraFlix.core.exception.BadRequestException;
+import com.challenge.alura.AluraFlix.core.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.core.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.core.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class VideoService {
           videoUpdate.setDescription(videoRequest.getDescription());
           videoUpdate.setUrl(videoRequest.getUrl());
           return new VideoResponse(videoRepository.save(videoUpdate));
-      }).orElseThrow(() -> new ExceptionNotFound("Id not found"));
+      }).orElseThrow(() -> new NotFoundException("Video not found"));
     }
 
     public void deleteVideo(String id){
@@ -61,12 +62,12 @@ public class VideoService {
 
     private Video getIdOrThrow(String id){
         return videoRepository.findById(id)
-                .orElseThrow(() -> new ExceptionNotFound("Id not found"));
+                .orElseThrow(() -> new NotFoundException("video not found"));
     }
 
     private void searchCategory(VideoRequest videoRequest){
         videoRequest.setCategory(
                 categoryRepository.findById(videoRequest.getCategory().getId())
-                        .orElseThrow(() -> new ExceptionNotFound("category not found")));
+                        .orElseThrow(() -> new BadRequestException("category doesn't exist")));
     }
 }

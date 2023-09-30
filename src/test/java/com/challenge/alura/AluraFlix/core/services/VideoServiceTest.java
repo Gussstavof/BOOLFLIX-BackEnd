@@ -4,7 +4,7 @@ import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;
-import com.challenge.alura.AluraFlix.core.exception.ExceptionNotFound;
+import com.challenge.alura.AluraFlix.core.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.core.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.core.repositories.VideoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -136,9 +136,9 @@ class VideoServiceTest {
     @Test
     void  getVideoByIdNotFoundTest(){
         when(videoRepository.findById("0"))
-                .thenThrow(new ExceptionNotFound("Id not found"));
+                .thenThrow(new NotFoundException("Id not found"));
 
-        assertThrows(ExceptionNotFound.class, () -> videoService.getByIdVideo("0"));
+        assertThrows(NotFoundException.class, () -> videoService.getByIdVideo("0"));
     }
 
     @Test

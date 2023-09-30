@@ -4,7 +4,7 @@ import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryRequest;
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
-import com.challenge.alura.AluraFlix.core.exception.ExceptionNotFound;
+import com.challenge.alura.AluraFlix.core.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.core.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.core.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +40,9 @@ public class CategoryService {
     }
 
     public CategoryResponse getById(String id) {
-        return new CategoryResponse(getIdOrThrow(id));
+        return new CategoryResponse(
+                getIdOrThrow(id).orElseThrow(() -> new NotFoundException("category doesn't exist"))
+        );
     }
 
     public CategoryResponse update(String id, CategoryRequest categoryRequest) {
@@ -48,7 +51,7 @@ public class CategoryService {
             categoryUpdate.setColor(categoryRequest.getColor());
             var category = categoryRepository.save(categoryUpdate);
             return new CategoryResponse(category);
-        }).orElseThrow(() -> new ExceptionNotFound("id not found"));
+        }).orElseThrow(() -> new NotFoundException("id not found"));
     }
 
     public void deleteCategory(String id) {
@@ -56,11 +59,13 @@ public class CategoryService {
     }
 
     public Page<Video> getVideosByCategory(String id, Pageable pageable) {
-        return videoRepository.findByCategory(getIdOrThrow(id), pageable);
+        return videoRepository.findByCategory(
+                getIdOrThrow(id).orElseThrow(() -> new NotFoundException("category doesn't exist")),
+                pageable
+        );
     }
 
-    private Category getIdOrThrow(String id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new ExceptionNotFound("Id not found"));
+    private Optional<Category> getIdOrThrow(String id) {
+        return categoryRepository.findById(id);
     }
 }

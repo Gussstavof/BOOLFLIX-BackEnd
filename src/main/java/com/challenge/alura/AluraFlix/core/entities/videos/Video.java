@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotBlank;
 @Document(collection = "collection_video")
 public class Video{
     @Id
-    private  String id;
+    private String id;
     @NotBlank
     private String title;
     @NotBlank

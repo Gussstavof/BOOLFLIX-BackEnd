@@ -8,6 +8,8 @@ import com.challenge.alura.AluraFlix.infra.security.services.AuthenticationServi
 import com.challenge.alura.AluraFlix.infra.security.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
