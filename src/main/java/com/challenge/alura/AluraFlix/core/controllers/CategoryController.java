@@ -4,6 +4,7 @@ import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryRequest;
 import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.services.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/categories")
+@SecurityRequirement(name = "bearerAuth")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

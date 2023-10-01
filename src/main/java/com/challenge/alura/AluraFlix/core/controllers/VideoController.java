@@ -3,6 +3,7 @@ package com.challenge.alura.AluraFlix.core.controllers;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -17,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/videos")
+@SecurityRequirement(name = "bearerAuth")
 public class VideoController {
     @Autowired
     private VideoService videoService;
