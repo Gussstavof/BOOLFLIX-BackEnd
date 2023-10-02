@@ -1,0 +1,8 @@
+version: '3'
+services:
+  meu-servico:
+    image: flix-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
