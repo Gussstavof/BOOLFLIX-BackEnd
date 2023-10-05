@@ -1,8 +1,12 @@
 version: '3'
+
 services:
-  meu-servico:
+  api:
     image: flix-backend
     ports:
       - "8080:8080"
     env_file:
       - .env
+    environment:
+      - MONGODB_URI=${DB_URI}
+      - SECRET_KEY=${JWT_KEY}
