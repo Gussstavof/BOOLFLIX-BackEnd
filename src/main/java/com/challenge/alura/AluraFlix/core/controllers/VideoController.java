@@ -19,6 +19,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/videos")
 @SecurityRequirement(name = "bearerAuth")
+@CrossOrigin(origins = "http://localhost:4000")
 public class VideoController {
     @Autowired
     private VideoService videoService;

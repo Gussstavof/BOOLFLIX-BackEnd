@@ -20,6 +20,7 @@ import java.net.URI;
 @RestController
 @RequestMapping(value = "/categories")
 @SecurityRequirement(name = "bearerAuth")
+@CrossOrigin(origins = "http://localhost:4000")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
