@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.controllers;
+package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;

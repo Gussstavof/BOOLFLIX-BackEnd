@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.infra.security.controllers;
+package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.core.dtos.tokens.TokenResponse;
 import com.challenge.alura.AluraFlix.core.entities.users.User;

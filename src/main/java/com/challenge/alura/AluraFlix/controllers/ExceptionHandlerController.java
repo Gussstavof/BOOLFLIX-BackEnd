@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.controllers;
+package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.core.dtos.exceptions.ExceptionResponse;
 import com.challenge.alura.AluraFlix.core.exception.BadRequestException;
