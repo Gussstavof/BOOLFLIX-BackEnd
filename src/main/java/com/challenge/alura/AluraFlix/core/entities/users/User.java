@@ -29,6 +29,7 @@ public class User implements UserDetails {
     @NotEmpty
     private String username;
     @Email
+    @NotEmpty
     private String email;
     @NotEmpty
     @Length(min = 8, max = 11)
