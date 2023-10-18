@@ -13,7 +13,8 @@
 
 O projeto contém duas variáveis de sistema:
 1. `JWT_KEY`: Chave usada para a criptografia do Token JWT.
-2. `DB_URI`: Define a URL do banco de dados. Recomenda-se utilizar um arquivo `.env` no diretório raiz do projeto.
+2. `DB_URI`: Define a URL do banco de dados.
+3. Recomenda-se utilizar um arquivo `.env` no diretório raiz do projeto.
 
 ## Comandos
 
