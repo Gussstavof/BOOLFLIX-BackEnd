@@ -6,6 +6,7 @@
 - MongoDB
 - Docker
 - JUnit
+- Maven
 
 ## Configurações do Projeto
 
