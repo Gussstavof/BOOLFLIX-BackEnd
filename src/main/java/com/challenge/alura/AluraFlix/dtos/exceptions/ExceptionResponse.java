@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.dtos.exceptions;
+package com.challenge.alura.AluraFlix.dtos.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

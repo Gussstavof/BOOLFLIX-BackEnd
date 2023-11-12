@@ -1,7 +1,7 @@
 package com.challenge.alura.AluraFlix.controllers;
 
-import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
-import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;
+import com.challenge.alura.AluraFlix.dtos.videos.VideoRequest;
+import com.challenge.alura.AluraFlix.dtos.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

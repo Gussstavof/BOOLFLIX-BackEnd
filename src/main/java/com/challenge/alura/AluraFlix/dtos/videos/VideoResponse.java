@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.dtos.videos;
+package com.challenge.alura.AluraFlix.dtos.videos;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;

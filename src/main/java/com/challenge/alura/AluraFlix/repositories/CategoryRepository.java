@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.repositories;
+package com.challenge.alura.AluraFlix.repositories;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import org.springframework.data.mongodb.repository.MongoRepository;

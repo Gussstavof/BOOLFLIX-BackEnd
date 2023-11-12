@@ -1,9 +1,8 @@
 package com.challenge.alura.AluraFlix.controllers;
 
-import com.challenge.alura.AluraFlix.core.dtos.exceptions.ExceptionResponse;
-import com.challenge.alura.AluraFlix.core.exception.BadRequestException;
-import com.challenge.alura.AluraFlix.core.exception.NotFoundException;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import com.challenge.alura.AluraFlix.dtos.exceptions.ExceptionResponse;
+import com.challenge.alura.AluraFlix.exception.BadRequestException;
+import com.challenge.alura.AluraFlix.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ControllerAdvice

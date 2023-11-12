@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.dtos.categories;
+package com.challenge.alura.AluraFlix.dtos.categories;
 
 import com.challenge.alura.AluraFlix.core.entities.categories.Category;
 import lombok.AllArgsConstructor;

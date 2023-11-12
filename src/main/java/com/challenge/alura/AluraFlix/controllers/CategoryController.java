@@ -1,7 +1,7 @@
 package com.challenge.alura.AluraFlix.controllers;
 
-import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryRequest;
-import com.challenge.alura.AluraFlix.core.dtos.categories.CategoryResponse;
+import com.challenge.alura.AluraFlix.dtos.categories.CategoryRequest;
+import com.challenge.alura.AluraFlix.dtos.categories.CategoryResponse;
 import com.challenge.alura.AluraFlix.core.entities.videos.Video;
 import com.challenge.alura.AluraFlix.core.services.CategoryService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

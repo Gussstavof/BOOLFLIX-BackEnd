@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.dtos.tokens;
+package com.challenge.alura.AluraFlix.dtos.tokens;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

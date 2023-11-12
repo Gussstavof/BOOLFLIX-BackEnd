@@ -1,8 +1,8 @@
 package com.challenge.alura.AluraFlix.core.controllers;
 
 import com.challenge.alura.AluraFlix.controllers.VideoController;
-import com.challenge.alura.AluraFlix.core.dtos.videos.VideoRequest;
-import com.challenge.alura.AluraFlix.core.dtos.videos.VideoResponse;
+import com.challenge.alura.AluraFlix.dtos.videos.VideoRequest;
+import com.challenge.alura.AluraFlix.dtos.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.core.services.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

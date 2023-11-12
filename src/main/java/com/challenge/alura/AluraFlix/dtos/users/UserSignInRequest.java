@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.dtos.users;
+package com.challenge.alura.AluraFlix.dtos.users;
 
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

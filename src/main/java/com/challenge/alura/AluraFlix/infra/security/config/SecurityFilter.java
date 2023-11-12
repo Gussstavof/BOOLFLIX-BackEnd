@@ -1,6 +1,6 @@
 package com.challenge.alura.AluraFlix.infra.security.config;
 
-import com.challenge.alura.AluraFlix.core.repositories.UserRepository;
+import com.challenge.alura.AluraFlix.repositories.UserRepository;
 import com.challenge.alura.AluraFlix.infra.security.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
