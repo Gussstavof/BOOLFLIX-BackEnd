@@ -1,8 +1,7 @@
 package com.challenge.alura.AluraFlix.dtos.videos;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
-import jakarta.validation.constraints.NotEmpty;
+import com.challenge.alura.AluraFlix.entities.categories.Category;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 

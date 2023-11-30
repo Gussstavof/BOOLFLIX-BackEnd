@@ -1,10 +1,10 @@
-package com.challenge.alura.AluraFlix.infra.security.services;
+package com.challenge.alura.AluraFlix.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.challenge.alura.AluraFlix.dtos.tokens.TokenResponse;
-import com.challenge.alura.AluraFlix.core.entities.users.User;
+import com.challenge.alura.AluraFlix.entities.users.User;
 import com.challenge.alura.AluraFlix.dtos.users.UserSignInRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

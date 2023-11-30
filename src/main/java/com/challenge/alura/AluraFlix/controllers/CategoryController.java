@@ -2,8 +2,8 @@ package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryRequest;
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryResponse;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
-import com.challenge.alura.AluraFlix.core.services.CategoryService;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
+import com.challenge.alura.AluraFlix.services.CategoryService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

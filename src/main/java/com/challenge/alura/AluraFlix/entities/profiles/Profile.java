@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.entities.profiles;
+package com.challenge.alura.AluraFlix.entities.profiles;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.infra.swagger;
+package com.challenge.alura.AluraFlix.config.doc;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

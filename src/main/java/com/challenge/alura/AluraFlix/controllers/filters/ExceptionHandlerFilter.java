@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.controllers;
+package com.challenge.alura.AluraFlix.controllers.filters;
 
 import com.challenge.alura.AluraFlix.dtos.exceptions.ExceptionResponse;
 import com.challenge.alura.AluraFlix.exception.BadRequestException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class ExceptionHandlerFilter {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionResponse> exception(NotFoundException exception) {

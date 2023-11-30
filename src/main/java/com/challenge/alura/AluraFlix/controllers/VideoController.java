@@ -2,7 +2,7 @@ package com.challenge.alura.AluraFlix.controllers;
 
 import com.challenge.alura.AluraFlix.dtos.videos.VideoRequest;
 import com.challenge.alura.AluraFlix.dtos.videos.VideoResponse;
-import com.challenge.alura.AluraFlix.core.services.VideoService;
+import com.challenge.alura.AluraFlix.services.VideoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.challenge.alura.AluraFlix.core.entities.categories;
+package com.challenge.alura.AluraFlix.entities.categories;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

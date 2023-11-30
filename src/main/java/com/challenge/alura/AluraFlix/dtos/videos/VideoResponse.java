@@ -1,13 +1,11 @@
 package com.challenge.alura.AluraFlix.dtos.videos;
 
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import com.challenge.alura.AluraFlix.entities.categories.Category;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,7 +1,7 @@
-package com.challenge.alura.AluraFlix.core.services;
+package com.challenge.alura.AluraFlix.services;
 
 import com.challenge.alura.AluraFlix.dtos.videos.VideoRequest;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
 import com.challenge.alura.AluraFlix.dtos.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.exception.BadRequestException;
 import com.challenge.alura.AluraFlix.exception.NotFoundException;

@@ -2,10 +2,10 @@ package com.challenge.alura.AluraFlix.core.controllers;
 
 import com.challenge.alura.AluraFlix.controllers.CategoryController;
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryRequest;
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import com.challenge.alura.AluraFlix.entities.categories.Category;
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryResponse;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
-import com.challenge.alura.AluraFlix.core.services.CategoryService;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
+import com.challenge.alura.AluraFlix.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

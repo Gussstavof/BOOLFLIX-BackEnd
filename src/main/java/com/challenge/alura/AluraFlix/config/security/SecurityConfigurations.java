@@ -1,5 +1,6 @@
-package com.challenge.alura.AluraFlix.infra.security.config;
+package com.challenge.alura.AluraFlix.config.security;
 
+import com.challenge.alura.AluraFlix.controllers.filters.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

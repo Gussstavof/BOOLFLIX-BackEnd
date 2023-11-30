@@ -1,9 +1,9 @@
-package com.challenge.alura.AluraFlix.core.services;
+package com.challenge.alura.AluraFlix.services;
 
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryRequest;
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
+import com.challenge.alura.AluraFlix.entities.categories.Category;
 import com.challenge.alura.AluraFlix.dtos.categories.CategoryResponse;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
 import com.challenge.alura.AluraFlix.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;

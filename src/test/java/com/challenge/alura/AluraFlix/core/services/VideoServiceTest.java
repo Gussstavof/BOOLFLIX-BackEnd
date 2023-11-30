@@ -1,12 +1,13 @@
 package com.challenge.alura.AluraFlix.core.services;
 
 import com.challenge.alura.AluraFlix.dtos.videos.VideoRequest;
-import com.challenge.alura.AluraFlix.core.entities.categories.Category;
-import com.challenge.alura.AluraFlix.core.entities.videos.Video;
+import com.challenge.alura.AluraFlix.entities.categories.Category;
+import com.challenge.alura.AluraFlix.entities.videos.Video;
 import com.challenge.alura.AluraFlix.dtos.videos.VideoResponse;
 import com.challenge.alura.AluraFlix.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
+import com.challenge.alura.AluraFlix.services.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

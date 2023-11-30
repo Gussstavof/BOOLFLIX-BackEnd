@@ -1,7 +1,7 @@
-package com.challenge.alura.AluraFlix.infra.security.services;
+package com.challenge.alura.AluraFlix.services;
 
-import com.challenge.alura.AluraFlix.core.entities.profiles.Profile;
-import com.challenge.alura.AluraFlix.core.entities.users.User;
+import com.challenge.alura.AluraFlix.entities.profiles.Profile;
+import com.challenge.alura.AluraFlix.entities.users.User;
 import com.challenge.alura.AluraFlix.dtos.users.UserSignupRequest;
 import com.challenge.alura.AluraFlix.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
