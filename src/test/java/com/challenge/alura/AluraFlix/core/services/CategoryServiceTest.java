@@ -131,7 +131,7 @@ class CategoryServiceTest {
         Page<Video> videos = new PageImpl<>(Collections.singletonList(video));
         when(categoryRepository.findById("1"))
                 .thenReturn(Optional.ofNullable(category));
-        when(videoRepository.findByCategory(category, pageable))
+        when(videoRepository.findAllByCategory(category, pageable))
                 .thenReturn(videos);
 
         var result = categoryService.getVideosByCategory("1", pageable);

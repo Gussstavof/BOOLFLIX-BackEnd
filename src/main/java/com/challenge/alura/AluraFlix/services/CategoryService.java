@@ -59,7 +59,7 @@ public class CategoryService {
     }
 
     public Page<Video> getVideosByCategory(String id, Pageable pageable) {
-        return videoRepository.findByCategory(
+        return videoRepository.findAllByCategory(
                 getIdOrThrow(id).orElseThrow(() -> new NotFoundException("category doesn't exist")),
                 pageable
         );
