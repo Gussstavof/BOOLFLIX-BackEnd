@@ -13,25 +13,21 @@
 O projeto contém duas variáveis de sistema:
 1. `JWT_KEY`: Chave usada para a criptografia do Token JWT.
 2. `DB_URI`: Define a URL do banco de dados.
-3. Recomenda-se utilizar um arquivo `.env` no diretório raiz do projeto.
+3. É necessário utilizar um arquivo `.env` no diretório raiz do projeto.
 
 ## Comandos
 
 Para gerar o arquivo JAR, utilize o seguinte comando:
 
-```bash
-mvn clean package -DDB_URI="url-bd" -DJWT_KEY="secret-key"
-```
 Para gerar a imagem Docker, use o comando a seguir:
 ```bash
-docker build --build-arg DB_URI="url-bd" --build-arg JWT_KEY="secret-key" -t aluraflix-api .
+docker build aluraflix-api .
 ```
 
 Para iniciar o container da aplicação, execute:
 ```bash
 docker compose up -d --build
 ```
-Certifique-se de substituir "url-bd" e "secret-key" pelos valores reais antes de usar os comandos.
 
 ## Documentação das Rotas:
 
