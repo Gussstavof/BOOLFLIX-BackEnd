@@ -17,8 +17,6 @@ O projeto contém duas variáveis de sistema:
 
 ## Comandos
 
-Para gerar o arquivo JAR, utilize o seguinte comando:
-
 Para gerar a imagem Docker, use o comando a seguir:
 ```bash
 docker build aluraflix-api .
