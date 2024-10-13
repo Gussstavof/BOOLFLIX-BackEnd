@@ -29,7 +29,7 @@ docker build --build-arg DB_URI="url-bd" --build-arg JWT_KEY="secret-key" -t alu
 
 Para iniciar o container da aplicação, execute:
 ```bash
-docker compose up -d --build
+docker build -t aluraflix-api:latest .
 ```
 Certifique-se de substituir "url-bd" e "secret-key" pelos valores reais antes de usar os comandos.
 

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    image: aluraflix-api-v2
+    image: aluraflix-api:latest
     container_name: api
     ports:
       - "8080:8080"

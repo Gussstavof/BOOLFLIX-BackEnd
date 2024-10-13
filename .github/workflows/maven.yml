@@ -36,4 +36,4 @@ jobs:
     - name: Build the Docker image
       run: |
         ls -l  # List the files in the current directory for debugging
-        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        docker build . --file Dockerfile --tag aluraflix-api:$(date +%s)
