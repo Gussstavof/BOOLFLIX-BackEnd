@@ -24,6 +24,7 @@ public class VideoService {
 
     public VideoResponse saveVideo(VideoRequest videoRequest){
         searchCategory(videoRequest);
+        setUpUrl(videoRequest);
         Video video = videoRepository.save(videoRequest.toVideo());
         return new VideoResponse(video);
     }
@@ -69,5 +70,11 @@ public class VideoService {
         videoRequest.setCategory(
                 categoryRepository.findById(videoRequest.getCategory().getId())
                         .orElseThrow(() -> new BadRequestException("category doesn't exist")));
+    }
+
+    private void setUpUrl(VideoRequest videoRequest) {
+        videoRequest.setUrl(videoRequest.getUrl()
+                .replace("watch", "embed")
+        );
     }
 }

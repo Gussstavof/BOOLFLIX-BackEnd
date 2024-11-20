@@ -8,11 +8,13 @@ import com.challenge.alura.AluraFlix.exception.NotFoundException;
 import com.challenge.alura.AluraFlix.repositories.CategoryRepository;
 import com.challenge.alura.AluraFlix.repositories.VideoRepository;
 import com.challenge.alura.AluraFlix.services.VideoService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,7 @@ class VideoServiceTest {
     VideoRequest videoRequest;
     VideoRequest videoUpdateRequest;
     VideoResponse videoUpdateResponse;
+    VideoResponse videoResponse;
     Category category;
     Category categoryId;
     Pageable pageable;
@@ -48,12 +51,26 @@ class VideoServiceTest {
                 .id("1")
                 .build();
 
+        category = Category.builder()
+                .id("1")
+                .title("Back-end")
+                .color("#00000")
+                .build();
+
         videoRequest = VideoRequest.builder()
                 .id("1")
                 .title("testando")
                 .description("testandoController")
                 .category(categoryId)
-                .url("https://www.youtube.com/")
+                .url("https://www.youtube.com/watch/teste")
+                .build();
+
+        videoResponse = VideoResponse.builder()
+                .id("1")
+                .title("testando")
+                .description("testandoController")
+                .url("https://www.youtube.com/embed/teste")
+                .category(category)
                 .build();
 
         videoUpdateRequest = VideoRequest.builder()
@@ -72,12 +89,6 @@ class VideoServiceTest {
                 .url("https://www.youtube.com/")
                 .build();
 
-        category = Category.builder()
-                .id("1")
-                .title("Back-end")
-                .color("#00000")
-                .build();
-
         video = Video.builder()
                 .id("1")
                 .title("testando")
@@ -93,6 +104,22 @@ class VideoServiceTest {
                 .description("testandoController")
                 .url("https://www.youtube.com/")
                 .build();
+    }
+
+    @Test
+    void saveVideoAndVerifyUrlFormatTest() {
+        Mockito.when(videoRepository.save(Mockito.any(Video.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Mockito.when(categoryRepository.findById(Mockito.anyString()))
+                .thenReturn(Optional.ofNullable(category));
+
+        var result = videoService.saveVideo(videoRequest);
+
+        Assertions.assertEquals("https://www.youtube.com/embed/teste", result.getUrl());
+        Assertions.assertEquals(videoResponse, result);
+        Assertions.assertEquals(videoResponse.getCategory(), result.getCategory());
+        verify(videoRepository, times(1)).save(Mockito.any(Video.class));
     }
 
     @Test
@@ -153,6 +180,7 @@ class VideoServiceTest {
 
         assertEquals(videoUpdateResponse, result);
     }
+
 
     @Test
     void deleteVideoTest(){
